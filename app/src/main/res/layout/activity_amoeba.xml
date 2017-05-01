@@ -54,6 +54,10 @@
         android:id="@+id/TopLayout"
         android:layout_margin="0dp">
 
+        <view android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            class="com.izyasosha.amoeba.GameView" android:id="@+id/view"/>
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
