@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".AmoebaActivity"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Light.NoTitleBar">
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

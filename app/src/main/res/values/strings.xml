@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Amoeba</string>
-
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="state">State: </string>
+    <string name="neutral">Neutral</string>
+    <string name="division">Division</string>
+    <string name="rest">Rest</string>
+    <string name="hungriness">Hungriness</string>
+    <string name="warning">Warning!</string>
+    <string name="death">Death</string>
 </resources>
