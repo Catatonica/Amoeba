@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.graphics.Bitmap;
@@ -30,7 +31,7 @@ public class GameView extends View {
 
     @Override
     protected void onDraw(Canvas cv) {
-        cv.drawColor(Color.WHITE);
+        cv.drawColor(Color.argb(100,175,244,228));
         Paint p = new Paint();
         p.setColor(Color.GREEN);
         p.setStrokeWidth(5);

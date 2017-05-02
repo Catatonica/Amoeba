@@ -16,9 +16,25 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/textView"
+            android:id="@+id/StateLabel"
+            android:text="State"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:background="@android:color/darker_gray"
+            tools:textSize="24sp"
+            tools:textStyle="normal|italic" />
+
+        <EditText
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/State"
             android:layout_weight="1"
-            android:text="hello" />
+            android:editable="false"
+            android:freezesText="false"
+            android:singleLine="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:background="?android:attr/colorButtonNormal" />
+
 
         <LinearLayout
             android:orientation="vertical"
@@ -31,15 +47,21 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/progressBar3"
-                android:progress="50" />
+                android:id="@+id/progressSatiety"
+                android:progress="25"
+                android:indeterminateDrawable="@color/colorAccent"
+                android:progressTint="@android:color/holo_orange_light"
+                android:tag="mvbmv"
+                android:indeterminate="false"
+                />
 
             <ProgressBar
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/progressBar2"
-                android:progress="45" />
+                android:id="@+id/progressEnergies"
+                android:progress="45"
+                android:progressTint="@android:color/holo_blue_dark" />
         </LinearLayout>
     </LinearLayout>
 
@@ -63,20 +85,23 @@
             <Button
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/button10"
+                android:id="@+id/buttonFood"
                 android:layout_weight="1"
-                android:background="@android:color/holo_purple" />
+                android:background="@color/colorPrimary"
+                android:text="food"
+                android:textAlignment="gravity" />
 
             <Button
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/button9"
+                android:id="@+id/buttonDanger"
                 android:layout_weight="1"
-                android:background="@color/colorAccent" />
+                android:background="@color/colorPrimaryDark"
+                android:text="danger" />
         </LinearLayout>
 
         <view android:layout_width="match_parent"
             android:layout_height="match_parent"
-            class="com.izyasosha.amoeba.GameView" android:id="@+id/view"/>
+            class="com.izyasosha.amoeba.GameView" android:id="@+id/view" />
     </LinearLayout>
 </RelativeLayout>
