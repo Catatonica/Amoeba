@@ -1,5 +1,6 @@
 package com.izyasosha.logics;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 /**
@@ -8,7 +9,14 @@ import android.graphics.Canvas;
 
 public final class Food extends GameObject
 {
-    void draw(Canvas c)
+    public Food(double x, double y, Bitmap bmp)
+    {
+        this.bmp = bmp;                    //возвращаем рисунок
+        this.x = x;
+        this.y = y;
+    }
+
+    public void draw(Canvas c)
     {
 
     }

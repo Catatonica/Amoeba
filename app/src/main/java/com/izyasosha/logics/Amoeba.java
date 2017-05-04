@@ -21,7 +21,6 @@ public final class Amoeba extends Creature
         public Amoeba(double x, double y, Bitmap bmp)
         {
             this.bmp = bmp;                    //возвращаем рисунок
-
             this.x = x;
             this.y = y;
         }
@@ -35,7 +34,7 @@ public final class Amoeba extends Creature
     //не даёт выйти координатам за край поля, вместо этого телепортирует на противоположный край
     public void setX(double x) {
         if(x<0){
-            this.x = Model.getGameWidth() - x;
+            this.x = Model.getGameWidth() + x;
         }
         else if (x>=Model.getGameWidth()){
             this.x = x - Model.getGameWidth();
@@ -47,7 +46,7 @@ public final class Amoeba extends Creature
 
     public void setY(double y) {
         if(y<0){
-            this.y = Model.getGameHeight() - y;
+            this.y = Model.getGameHeight() + y;
         }
         else if (y >= Model.getGameHeight()){
             this.y = y - Model.getGameHeight();

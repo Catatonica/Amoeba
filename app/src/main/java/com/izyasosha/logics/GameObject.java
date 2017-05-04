@@ -15,6 +15,6 @@ public abstract class GameObject
     protected byte size=0;
     protected Bitmap bmp=null;
 
-    abstract void draw(Canvas c);
+    public abstract void draw(Canvas c);
 
 }

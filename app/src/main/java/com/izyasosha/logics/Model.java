@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Model {
 
-    private enum CreationMode{
+    public enum CreationMode{
         FOOD,
         ENEMY
     }
@@ -24,11 +24,29 @@ public class Model {
         Model.amoeba = amoeba;
     }
 
+    public static Food getFood() { return food; }
+
+    public static void setFood(Food food) { Model.food = food;}
+
+    private static Food food;
+
+    public static Enemy getEnemy() { return enemy; }
+
+    public static void setEnemy(Enemy enemy) {
+        Model.enemy = enemy;
+    }
+
+    private static Enemy enemy;
+
     private static Amoeba amoeba;
 
-    public static ArrayList<Enemy> enemies = new ArrayList<>();
-    public static ArrayList<Food> foods = new ArrayList<>();
+   // public static ArrayList<Enemy> enemies = new ArrayList<>();
+   // public static ArrayList<Food> foods = new ArrayList<>();
 
+    public static ArrayList<GameObject> gameObjects = new ArrayList<>();
+
+    private static CreationMode mode= CreationMode.FOOD ;
+    //при запуске игры - режим создания хавчика
     public static CreationMode getMode() {
         return mode;
     }
@@ -37,8 +55,7 @@ public class Model {
         Model.mode = mode;
     }
 
-    private static CreationMode mode = CreationMode.FOOD;
-    //при запуске игры - режим создания хавчика
+
 
     public static int getGameHeight() {
         return gameHeight;
