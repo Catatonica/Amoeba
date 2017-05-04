@@ -30,10 +30,13 @@ import java.util.ArrayList;
 public class GameView extends View {
 
     Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
+    Bitmap enemyBMP= BitmapFactory.decodeResource(getResources(), R.drawable.enemy);
+    Bitmap foodBMP= BitmapFactory.decodeResource(getResources(), R.drawable.food);
     public float X=0;
     public float Y=0;
     Canvas mCanvas;
     GameView gameView;
+    ArrayList <GameObject> objectArrayList=new ArrayList<>();
 
 
     public GameView(Context cxt, AttributeSet attrs) {
@@ -48,7 +51,7 @@ public class GameView extends View {
         mCanvas.drawColor(Color.argb(100,175,244,228));
        // mCanvas.drawBitmap(amoebaBMP, X, Y, null);
 
-        ArrayList <GameObject> objectArrayList=new ArrayList<>();
+
         Amoeba amoeba=new Amoeba(gameView,amoebaBMP);
         objectArrayList.add(amoeba);
         for(GameObject obj:objectArrayList)
@@ -78,14 +81,16 @@ public class GameView extends View {
                 switch (button)
                 {
                     case "buttonFood":
-                        Food food=new Food();
+                        Food food=new Food(gameView,foodBMP);
+
                         object=food;
                         break;
                     case "buttonDanger":
-                        Enemy enemy=new Enemy();
+                        Enemy enemy=new Enemy(gameView,enemyBMP);
                         object=enemy;
                         break;
                 }
+                objectArrayList.add(object);
                 invalidate();
                 break;
             case MotionEvent.ACTION_MOVE: // движени
