@@ -13,16 +13,27 @@ import android.view.View;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.MotionEvent;
+import android.widget.ImageView;
 
-//import com.izyasosha.logics.Amoeba;
+import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
+
+import com.izyasosha.logics.Amoeba;
+import com.izyasosha.logics.Enemy;
+import com.izyasosha.logics.Food;
+import com.izyasosha.logics.GameObject;
+
+import java.util.ArrayList;
+
 
 
 public class GameView extends View {
-    //private Amoeba amoeba;
+
     Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
     public float X=0;
     public float Y=0;
     Canvas mCanvas;
+    GameView gameView;
 
 
     public GameView(Context cxt, AttributeSet attrs) {
@@ -35,8 +46,23 @@ public class GameView extends View {
         mCanvas=cv;
         super.onDraw(mCanvas);
         mCanvas.drawColor(Color.argb(100,175,244,228));
-        mCanvas.drawBitmap(amoebaBMP, X, Y, null);
-       // invalidate();
+       // mCanvas.drawBitmap(amoebaBMP, X, Y, null);
+
+        ArrayList <GameObject> objectArrayList=new ArrayList<>();
+        Amoeba amoeba=new Amoeba(gameView,amoebaBMP);
+        objectArrayList.add(amoeba);
+        for(GameObject obj:objectArrayList)
+        {
+          obj.draw(mCanvas);
+           /* try
+                {
+                    TimeUnit.SECONDS.sleep(1);
+                }
+            catch (InterruptedException ex)
+            {
+
+            } */
+        }
     }
 
     public boolean onTouchEvent( MotionEvent event) {
@@ -46,7 +72,20 @@ public class GameView extends View {
         // переключатель в зависимости от типа события
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mCanvas.drawBitmap(amoebaBMP, X, Y, null);
+              //  mCanvas.drawBitmap(amoebaBMP, X, Y, null);
+                String button="";
+                GameObject object;
+                switch (button)
+                {
+                    case "buttonFood":
+                        Food food=new Food();
+                        object=food;
+                        break;
+                    case "buttonDanger":
+                        Enemy enemy=new Enemy();
+                        object=enemy;
+                        break;
+                }
                 invalidate();
                 break;
             case MotionEvent.ACTION_MOVE: // движени
