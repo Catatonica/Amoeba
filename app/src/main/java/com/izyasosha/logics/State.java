@@ -7,9 +7,9 @@ package com.izyasosha.logics;
 public enum  State
 {
     neutral,
-    devision,
+    division,
     rest,
     death,
-    hungrieness,
+    hungriness,
     warning
 }
