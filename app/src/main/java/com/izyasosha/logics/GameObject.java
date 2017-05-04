@@ -1,6 +1,7 @@
 package com.izyasosha.logics;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 
 /**
  * Created by Алексей on 02.05.2017.
@@ -8,10 +9,12 @@ import android.graphics.Bitmap;
 
 public abstract class GameObject
 {
-    protected double x=0, y=0;
+
+    protected double x=0;
+    protected double y=0;
     protected byte size=0;
     protected Bitmap bmp=null;
 
-    abstract void draw();
+    abstract void draw(Canvas c);
 
 }

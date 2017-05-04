@@ -14,12 +14,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.MotionEvent;
 
+import com.izyasosha.logics.Amoeba;
+import com.izyasosha.logics.Model;
+
 //import com.izyasosha.logics.Amoeba;
 
 
 public class GameView extends View {
-    //private Amoeba amoeba;
     Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
+
     public float X=0;
     public float Y=0;
     Canvas mCanvas;
@@ -32,6 +35,9 @@ public class GameView extends View {
     }
 
     protected void onDraw(Canvas cv) {
+        Model.setGameHeight(cv.getHeight());
+        Model.setGameWidth(cv.getWidth());
+
         mCanvas=cv;
         super.onDraw(mCanvas);
         mCanvas.drawColor(Color.argb(100,175,244,228));
@@ -46,6 +52,9 @@ public class GameView extends View {
         // переключатель в зависимости от типа события
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                Model.setAmoeba(new Amoeba(X, Y, amoebaBMP));
+
+
                 mCanvas.drawBitmap(amoebaBMP, X, Y, null);
                 invalidate();
                 break;
