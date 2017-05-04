@@ -33,7 +33,7 @@
             android:freezesText="false"
             android:singleLine="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:background="?android:attr/colorButtonNormal" />
+            />
 
 
         <LinearLayout
