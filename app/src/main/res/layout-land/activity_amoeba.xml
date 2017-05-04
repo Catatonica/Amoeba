@@ -31,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="1"
+
             android:background="@android:color/holo_blue_dark"
             android:padding="10dp"
             android:text="@string/neutral"
@@ -39,6 +40,14 @@
             android:textStyle="italic"
             tools:textSize="24sp"
             tools:textStyle="normal|italic" />
+
+            android:editable="false"
+            android:freezesText="false"
+            android:singleLine="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            />
+
+
 
         <LinearLayout
             android:id="@+id/ProgressBarLayout"

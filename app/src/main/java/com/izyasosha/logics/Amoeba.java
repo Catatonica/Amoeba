@@ -7,18 +7,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import com.izyasosha.amoeba.GameView;
 
-public class Amoeba
+public final class Amoeba extends Creature
 {
-
         /**Объект главного класса*/
         GameView gameView;
-
-        //спрайт
-        Bitmap bmp;
-
-        //х и у координаты рисунка
-        int x;
-        int y;
 
         //конструктор
         public Amoeba(GameView gameView, Bitmap bmp)
@@ -35,5 +27,10 @@ public class Amoeba
         {
             c.drawBitmap(bmp, x, y, null);
         }
+
+    void draw()
+    {
+
+    }
 
 }
