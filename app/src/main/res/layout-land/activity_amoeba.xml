@@ -6,29 +6,41 @@
     tools:context=".AmoebaActivity">
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/BottomLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="bottom"
-        android:id="@+id/BottomLayout">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
             android:id="@+id/StateLabel"
-            android:text="State"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@android:color/black"
+            android:padding="10dp"
+            android:text="@string/state"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:background="@android:color/darker_gray"
+            android:textStyle="italic"
             tools:textSize="24sp"
             tools:textStyle="normal|italic" />
 
-        <EditText
+        <TextView
 
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
             android:id="@+id/State"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1"
+
+            android:background="@android:color/holo_blue_dark"
+            android:padding="10dp"
+            android:text="@string/neutral"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textStyle="italic"
+            tools:textSize="24sp"
+            tools:textStyle="normal|italic" />
+
             android:editable="false"
             android:freezesText="false"
             android:singleLine="false"
@@ -36,32 +48,34 @@
             />
 
 
+
         <LinearLayout
-            android:orientation="vertical"
+            android:id="@+id/ProgressBarLayout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/ProgressBarLayout"
-            android:layout_weight="1">
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <ProgressBar
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/progressSatiety"
-                android:progress="25"
-                android:indeterminateDrawable="@color/colorAccent"
-                android:progressTint="@android:color/holo_orange_light"
-                android:tag="mvbmv"
-                android:indeterminate="false"
-                />
-
-            <ProgressBar
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:indeterminate="false"
+                android:indeterminateDrawable="@color/colorAccent"
+                android:progress="25"
+                android:progressTint="@android:color/holo_orange_light"
+                android:tag="mvbmv" />
+
+            <ProgressBar
                 android:id="@+id/progressEnergies"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:progress="45"
                 android:progressTint="@android:color/holo_blue_dark" />
+
         </LinearLayout>
     </LinearLayout>
 
@@ -82,26 +96,51 @@
             android:layout_height="match_parent"
             android:id="@+id/ButtonsLayout">
 
-            <Button
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
+            <ImageView
                 android:id="@+id/buttonFood"
-                android:layout_weight="1"
-                android:background="@color/colorPrimary"
-                android:text="food"
-                android:textAlignment="gravity" />
-
-            <Button
                 android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/food" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <ImageView
                 android:id="@+id/buttonDanger"
-                android:layout_weight="1"
-                android:background="@color/colorPrimaryDark"
-                android:text="danger" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/danger" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
         </LinearLayout>
 
-        <view android:layout_width="match_parent"
+        <view
+            android:id="@+id/view"
+            class="com.izyasosha.amoeba.GameView"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            class="com.izyasosha.amoeba.GameView" android:id="@+id/view" />
+            android:background="@android:color/background_light" />
     </LinearLayout>
 </RelativeLayout>
