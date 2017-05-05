@@ -80,7 +80,7 @@ public class GameView extends View {
                     case ENEMY:
                         gameObjects.add(new Enemy(X,Y,enemyBMP));
                         break;
-                    default:
+                    case NONE:
                         break;
                 }
                 for(GameObject obj: gameObjects) {

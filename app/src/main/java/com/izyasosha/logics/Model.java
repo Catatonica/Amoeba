@@ -10,7 +10,8 @@ public class Model {
 
     public enum CreationMode{
         FOOD,
-        ENEMY
+        ENEMY,
+        NONE
     }
 
     //private - чтобы нельзя было создать объект этого класса - объекты нам ни к чему
@@ -27,7 +28,7 @@ public class Model {
 
     public static ArrayList<GameObject> gameObjects = new ArrayList<>();
 
-    private static CreationMode mode;
+    private static CreationMode mode = CreationMode.NONE;
     public static CreationMode getMode() {
         return mode;
     }
