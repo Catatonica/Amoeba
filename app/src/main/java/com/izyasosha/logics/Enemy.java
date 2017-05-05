@@ -16,8 +16,4 @@ public final class Enemy extends Creature
         this.x = x;
         this.y = y;
     }
-    public void draw(Canvas c)
-    {
-
-    }
 }

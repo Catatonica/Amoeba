@@ -16,65 +16,40 @@ public class Model {
     //private - чтобы нельзя было создать объект этого класса - объекты нам ни к чему
     private Model(){    }
 
+    private static Amoeba amoeba;
     public static Amoeba getAmoeba() {
         return amoeba;
     }
-
     public static void setAmoeba(Amoeba amoeba) {
         Model.amoeba = amoeba;
     }
 
-    public static Food getFood() { return food; }
-
-    public static void setFood(Food food) { Model.food = food;}
-
-    private static Food food;
-
-    public static Enemy getEnemy() { return enemy; }
-
-    public static void setEnemy(Enemy enemy) {
-        Model.enemy = enemy;
-    }
-
-    private static Enemy enemy;
-
-    private static Amoeba amoeba;
-
-   // public static ArrayList<Enemy> enemies = new ArrayList<>();
-   // public static ArrayList<Food> foods = new ArrayList<>();
 
     public static ArrayList<GameObject> gameObjects = new ArrayList<>();
 
-    private static CreationMode mode= CreationMode.FOOD ;
-    //при запуске игры - режим создания хавчика
+    private static CreationMode mode;
     public static CreationMode getMode() {
         return mode;
     }
-
     public static void setMode(CreationMode mode) {
         Model.mode = mode;
     }
 
-
-
+    private static int gameHeight;
     public static int getGameHeight() {
         return gameHeight;
     }
-
     public static void setGameHeight(int gameHeight) {
         Model.gameHeight = gameHeight;
     }
 
-    private static int gameHeight;
 
+    private static int gameWidth;
     public static int getGameWidth() {
         return gameWidth;
     }
-
     public static void setGameWidth(int gameWidth) {
         Model.gameWidth = gameWidth;
     }
-
-    private static int gameWidth;
 
 }

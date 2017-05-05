@@ -15,6 +15,9 @@ public abstract class GameObject
     protected byte size=0;
     protected Bitmap bmp=null;
 
-    public abstract void draw(Canvas c);
+    public void draw(Canvas c)
+    {
+        c.drawBitmap(bmp, Math.round(x)- bmp.getWidth()/2, Math.round(y) - bmp.getHeight()/2, null);
+    }
 
 }

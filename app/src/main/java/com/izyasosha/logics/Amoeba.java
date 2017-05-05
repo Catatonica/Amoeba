@@ -25,11 +25,6 @@ public final class Amoeba extends Creature
             this.y = y;
         }
 
-        //рисуем наш спрайт
-        public void draw(Canvas c)
-        {
-            c.drawBitmap(bmp, Math.round(x), Math.round(y), null);
-        }
 
     //не даёт выйти координатам за край поля, вместо этого телепортирует на противоположный край
     public void setX(double x) {

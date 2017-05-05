@@ -33,9 +33,7 @@ public class GameView extends View {
     public float X=0;
     public float Y=0;
     Canvas mCanvas;
-    GameView gameView;
   //  ArrayList<GameObject> objectArrayList=new ArrayList<>();
-
 
     public GameView(Context cxt, AttributeSet attrs) {
         super(cxt, attrs);
@@ -71,23 +69,23 @@ public class GameView extends View {
         // координаты нажатия
         X=event.getX();
         Y=event.getY();
-        GameObject object=null;
         // переключатель в зависимости от типа события
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-
                 switch (Model.getMode())
                 {
                     case FOOD:
-                          Model.setFood(new Food(X,Y,foodBMP));
-                          object=Model.getFood();
-                          break;
+                        gameObjects.add(new Food(X,Y,foodBMP));
+                        break;
                     case ENEMY:
-                          Model.setEnemy(new Enemy(X,Y,enemyBMP));
-                          object=Model.getEnemy();
-                          break;
+                        gameObjects.add(new Enemy(X,Y,enemyBMP));
+                        break;
+                    default:
+                        break;
                 }
-                gameObjects.add(object);
+                for(GameObject obj: gameObjects) {
+                    obj.draw(mCanvas);
+                }
                 invalidate();
                 break;
             case MotionEvent.ACTION_MOVE: // движени
