@@ -6,10 +6,10 @@ package com.izyasosha.logics;
 
 public enum  State
 {
-    neutral,
-    division,
-    rest,
-    death,
-    hungriness,
-    warning
+    NEUTRAL,
+    DIVISION,
+    REST,
+    DEATH,
+    HUNGRINESS,
+    WARNING
 }

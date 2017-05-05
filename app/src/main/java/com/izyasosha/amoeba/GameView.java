@@ -13,17 +13,27 @@ import android.view.View;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.MotionEvent;
+import com.izyasosha.logics.Amoeba;
+import com.izyasosha.logics.Enemy;
+import com.izyasosha.logics.Food;
+import com.izyasosha.logics.GameObject;
+import com.izyasosha.logics.Model;
+import java.util.ArrayList;
+
+import static com.izyasosha.logics.Model.gameObjects;
 
 //import com.izyasosha.logics.Amoeba;
 
 
 public class GameView extends View {
-    //private Amoeba amoeba;
     Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
+    Bitmap enemyBMP= BitmapFactory.decodeResource(getResources(), R.drawable.enemy);
+    Bitmap foodBMP= BitmapFactory.decodeResource(getResources(), R.drawable.food1);
+
     public float X=0;
     public float Y=0;
     Canvas mCanvas;
-
+  //  ArrayList<GameObject> objectArrayList=new ArrayList<>();
 
     public GameView(Context cxt, AttributeSet attrs) {
         super(cxt, attrs);
@@ -32,11 +42,27 @@ public class GameView extends View {
     }
 
     protected void onDraw(Canvas cv) {
+        Model.setGameHeight(cv.getHeight());
+        Model.setGameWidth(cv.getWidth());
+
         mCanvas=cv;
         super.onDraw(mCanvas);
         mCanvas.drawColor(Color.argb(100,175,244,228));
-        mCanvas.drawBitmap(amoebaBMP, X, Y, null);
-       // invalidate();
+
+        Model.setAmoeba(new Amoeba(Model.getGameWidth()/2,Model.getGameHeight()/2, amoebaBMP));
+        gameObjects.add(Model.getAmoeba());
+        for(GameObject obj: gameObjects)
+        {
+            obj.draw(mCanvas);
+             /* try
++                {
++                    TimeUnit.SECONDS.sleep(1);
++                }
++            catch (InterruptedException ex)
++            {
++
++            } */
+        }
     }
 
     public boolean onTouchEvent( MotionEvent event) {
@@ -46,7 +72,20 @@ public class GameView extends View {
         // переключатель в зависимости от типа события
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mCanvas.drawBitmap(amoebaBMP, X, Y, null);
+                switch (Model.getMode())
+                {
+                    case FOOD:
+                        gameObjects.add(new Food(X,Y,foodBMP));
+                        break;
+                    case ENEMY:
+                        gameObjects.add(new Enemy(X,Y,enemyBMP));
+                        break;
+                    default:
+                        break;
+                }
+                for(GameObject obj: gameObjects) {
+                    obj.draw(mCanvas);
+                }
                 invalidate();
                 break;
             case MotionEvent.ACTION_MOVE: // движени
