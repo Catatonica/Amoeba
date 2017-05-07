@@ -4,6 +4,7 @@ package com.izyasosha.amoeba;
  * Created by Алексей on 01.05.2017.
  */
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -19,6 +20,9 @@ import com.izyasosha.logics.Food;
 import com.izyasosha.logics.GameObject;
 import com.izyasosha.logics.Model;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 import static com.izyasosha.logics.Model.gameObjects;
 
@@ -51,19 +55,11 @@ public class GameView extends View {
 
         Model.setAmoeba(new Amoeba(Model.getGameWidth()/2,Model.getGameHeight()/2, amoebaBMP));
         gameObjects.add(Model.getAmoeba());
-        for(GameObject obj: gameObjects)
-        {
-            obj.draw(mCanvas);
-             /* try
-+                {
-+                    TimeUnit.SECONDS.sleep(1);
-+                }
-+            catch (InterruptedException ex)
-+            {
-+
-+            } */
-        }
-    }
+
+                for (GameObject obj : gameObjects) {
+                    obj.draw(mCanvas);
+                }
+}
 
     public boolean onTouchEvent( MotionEvent event) {
         // координаты нажатия
@@ -82,9 +78,6 @@ public class GameView extends View {
                         break;
                     case NONE:
                         break;
-                }
-                for(GameObject obj: gameObjects) {
-                    obj.draw(mCanvas);
                 }
                 invalidate();
                 break;

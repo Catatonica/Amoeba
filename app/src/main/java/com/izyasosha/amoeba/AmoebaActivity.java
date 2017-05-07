@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class AmoebaActivity extends Activity  {
 
     TextView stateLabel;
@@ -22,7 +25,7 @@ public class AmoebaActivity extends Activity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_amoeba);
 
-        stateLabel = (TextView) findViewById(R.id.StateLabel);
+    stateLabel = (TextView) findViewById(R.id.StateLabel);
     }
 
     public void onClickSetFood(View view)

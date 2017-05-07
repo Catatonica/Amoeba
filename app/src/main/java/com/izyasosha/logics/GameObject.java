@@ -18,6 +18,8 @@ public abstract class GameObject
     public void draw(Canvas c)
     {
         c.drawBitmap(bmp, Math.round(x)- bmp.getWidth()/2, Math.round(y) - bmp.getHeight()/2, null);
+        update();
     }
+    abstract void update();
 
 }

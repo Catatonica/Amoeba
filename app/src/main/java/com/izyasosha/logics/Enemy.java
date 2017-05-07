@@ -9,11 +9,13 @@ import android.graphics.Canvas;
 
 public final class Enemy extends Creature
 {
-
     public Enemy(double x, double y, Bitmap bmp)
     {
         this.bmp = bmp;                    //возвращаем рисунок
         this.x = x;
         this.y = y;
+    }
+    public void update(){
+        x -= velocity;
     }
 }

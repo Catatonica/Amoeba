@@ -6,7 +6,7 @@ package com.izyasosha.logics;
 
 public abstract class Creature extends GameObject
 {
-    protected byte velocity;
+    protected byte velocity=50;
 
     protected void moveRandomly()
     {

@@ -15,5 +15,6 @@ public final class Food extends GameObject
         this.x = x;
         this.y = y;
     }
+    public void update(){}
 
 }
