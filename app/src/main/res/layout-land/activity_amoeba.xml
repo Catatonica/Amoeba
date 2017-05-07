@@ -15,24 +15,25 @@
 
         <TextView
             android:id="@+id/StateLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
             android:background="@android:color/black"
-            android:padding="10dp"
+            android:gravity="center"
             android:text="@string/state"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textStyle="italic"
-            tools:textSize="24sp"
+            tools:textSize="16sp"
             tools:textStyle="normal|italic" />
 
         <TextView
 
             android:id="@+id/State"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
 
             android:background="@android:color/holo_blue_dark"
+            android:gravity="center"
             android:padding="10dp"
             android:text="@string/neutral"
             android:textAlignment="center"
@@ -41,37 +42,38 @@
             tools:textSize="24sp"
             tools:textStyle="normal|italic" />
 
-            android:editable="false"
-            android:freezesText="false"
-            android:singleLine="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            />
-
+        android:editable="false"
+        android:freezesText="false"
+        android:singleLine="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        />
 
 
         <LinearLayout
             android:id="@+id/ProgressBarLayout"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="40dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <ProgressBar
                 android:id="@+id/progressSatiety"
-                style="?android:attr/progressBarStyleHorizontal"
+                style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:progress="25"
-                android:progressTint="@android:color/holo_orange_light"/>
+                android:scaleY="4" />
 
             <ProgressBar
                 android:id="@+id/progressEnergies"
-                style="?android:attr/progressBarStyleHorizontal"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:progress="45"
-                android:progressTint="@android:color/holo_blue_dark" />
+                android:scaleY="4" />
 
         </LinearLayout>
     </LinearLayout>
