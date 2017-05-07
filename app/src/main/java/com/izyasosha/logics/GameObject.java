@@ -19,5 +19,6 @@ public abstract class GameObject
     {
         c.drawBitmap(bmp, Math.round(x)- bmp.getWidth()/2, Math.round(y) - bmp.getHeight()/2, null);
     }
+    public abstract void update();
 
 }

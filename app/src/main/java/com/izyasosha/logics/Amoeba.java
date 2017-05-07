@@ -60,6 +60,7 @@ public final class Amoeba extends Creature
     }
 
     private State state;
+    public void update(){};
 
 
 }

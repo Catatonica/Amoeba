@@ -32,7 +32,7 @@ public class GameView extends View {
 
     public float X=0;
     public float Y=0;
-    Canvas mCanvas;
+    static Canvas mCanvas;
   //  ArrayList<GameObject> objectArrayList=new ArrayList<>();
 
     public GameView(Context cxt, AttributeSet attrs) {
@@ -51,17 +51,19 @@ public class GameView extends View {
 
         Model.setAmoeba(new Amoeba(Model.getGameWidth()/2,Model.getGameHeight()/2, amoebaBMP));
         gameObjects.add(Model.getAmoeba());
+        newDraw();
+
+    }
+    public void newDraw()
+    {
+        invalidate();
+        for(GameObject obj: gameObjects)
+        {
+            obj.update();
+        }
         for(GameObject obj: gameObjects)
         {
             obj.draw(mCanvas);
-             /* try
-+                {
-+                    TimeUnit.SECONDS.sleep(1);
-+                }
-+            catch (InterruptedException ex)
-+            {
-+
-+            } */
         }
     }
 
@@ -83,14 +85,11 @@ public class GameView extends View {
                     case NONE:
                         break;
                 }
-                for(GameObject obj: gameObjects) {
-                    obj.draw(mCanvas);
-                }
                 invalidate();
                 break;
             case MotionEvent.ACTION_MOVE: // движени
             case MotionEvent.ACTION_UP: // отпускание
-            case MotionEvent.ACTION_CANCEL:// ничего не делаем
+            case MotionEvent.ACTION_CANCEL: // ничего не делаем
         }
         return true;
     }

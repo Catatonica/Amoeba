@@ -16,4 +16,9 @@ public final class Enemy extends Creature
         this.x = x;
         this.y = y;
     }
+
+    public void update()
+    {
+        x-=20;
+    }
 }
