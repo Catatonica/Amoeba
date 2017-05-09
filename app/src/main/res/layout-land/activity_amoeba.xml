@@ -20,10 +20,12 @@
             android:gravity="center"
             android:text="@string/state"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textStyle="italic"
             tools:textSize="16sp"
             tools:textStyle="normal|italic"
-            android:background="@color/nya2" />
+            android:background="@color/nya2"
+            android:fontFamily="casual"
+            android:textSize="18sp"
+            android:textColor="@color/light_gray" />
 
         <TextView
 
@@ -36,11 +38,12 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/neutral"
-            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textStyle="italic"
             tools:textSize="24sp"
-            tools:textStyle="normal|italic" />
+            tools:textStyle="normal|italic"
+            android:fontFamily="casual"
+            android:textSize="18sp"
+            android:textColor="@color/light_gray" />
 
         android:editable="false"
         android:freezesText="false"
@@ -70,15 +73,23 @@
                     android:layout_weight="1"
                     android:progress="25"
                     android:scaleY="5"
-                    android:minHeight="25dp" />
+                    android:minHeight="25dp"
+                    android:visibility="visible"
+                    android:background="@color/nya2"
+                    android:progressBackgroundTint="@color/yellow"
+                    android:progressTint="@android:color/holo_orange_light" />
 
                 <TextView
                     android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:text="@string/satiety"
-                    android:textColor="@android:color/black" />
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:fontFamily="casual"
+                    android:textColor="@color/light_gray"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal"/>
             </FrameLayout>
 
             <FrameLayout
@@ -95,16 +106,23 @@
                     android:layout_weight="1"
                     android:progress="45"
                     android:scaleY="5"
-                    android:minHeight="25dp" />
+                    android:minHeight="25dp"
+                    android:background="@color/nya2"
+                    android:progressBackgroundTint="@color/nya1"
+                    android:progressTint="@android:color/holo_blue_bright" />
 
                 <TextView
                     android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:text="@string/energies"
-                    android:textColor="@android:color/black" />
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:fontFamily="casual"
+                    android:textColor="@color/light_gray"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal"/>
             </FrameLayout>
 
         </LinearLayout>
@@ -149,15 +167,15 @@
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray" />
 
-            <!--Space
+            <Space
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" /!-->
+                android:layout_weight="1" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@android:color/darker_gray"></View>
+                android:background="@android:color/darker_gray"/>
 
             <ImageView
                 android:id="@+id/buttonDanger"
@@ -169,7 +187,7 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/danger"
               />
-            /!-->
+            />
 
         </LinearLayout>
 
@@ -179,6 +197,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:background="@android:color/background_light" />
+            android:background="@color/yellow" />
     </LinearLayout>
 </RelativeLayout>

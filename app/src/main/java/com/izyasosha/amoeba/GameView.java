@@ -26,9 +26,6 @@ public class GameView extends View {
     Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
     Bitmap enemyBMP= BitmapFactory.decodeResource(getResources(), R.drawable.enemy);
     Bitmap foodBMP= BitmapFactory.decodeResource(getResources(), R.drawable.food1);
-    //Bitmap water=BitmapFactory.decodeResource(getResources(),R.drawable.water4);
-    Bitmap water;
-
 
     public float X=0;
     public float Y=0;
@@ -38,9 +35,6 @@ public class GameView extends View {
         super(cxt, attrs);
         setMinimumHeight(100);
         setMinimumWidth(100);
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 2;
-       water = BitmapFactory.decodeResource(getResources(), R.drawable.water4, options);
     }
 
     protected void onDraw(Canvas cv) {
@@ -49,13 +43,11 @@ public class GameView extends View {
 
         mCanvas=cv;
         super.onDraw(mCanvas);
-        //mCanvas.drawColor(Color.argb(100,175,244,228));
-        mCanvas.drawBitmap(water,0,0,null);
+        mCanvas.drawColor(Color.argb(255,228,219,138));
 
         Model.setAmoeba(new Amoeba(Model.getGameWidth()/2,Model.getGameHeight()/2, amoebaBMP));
         gameObjects.add(Model.getAmoeba());
         renderFrame();
-
     }
     public void renderFrame()
     {
