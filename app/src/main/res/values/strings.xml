@@ -7,4 +7,7 @@
     <string name="hungriness">Hungriness</string>
     <string name="warning">Warning!</string>
     <string name="death">Death</string>
+    <string name="satiety">Satiety</string>
+    <string name="energies">Energies</string>
+
 </resources>

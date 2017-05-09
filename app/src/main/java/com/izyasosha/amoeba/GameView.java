@@ -7,7 +7,9 @@ package com.izyasosha.amoeba;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-//import android.graphics.Paint;
+import android.graphics.Picture;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PictureDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.graphics.Bitmap;
@@ -18,27 +20,27 @@ import com.izyasosha.logics.Enemy;
 import com.izyasosha.logics.Food;
 import com.izyasosha.logics.GameObject;
 import com.izyasosha.logics.Model;
-import java.util.ArrayList;
-
 import static com.izyasosha.logics.Model.gameObjects;
-
-//import com.izyasosha.logics.Amoeba;
-
 
 public class GameView extends View {
     Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
     Bitmap enemyBMP= BitmapFactory.decodeResource(getResources(), R.drawable.enemy);
     Bitmap foodBMP= BitmapFactory.decodeResource(getResources(), R.drawable.food1);
+    //Bitmap water=BitmapFactory.decodeResource(getResources(),R.drawable.water4);
+    Bitmap water;
+
 
     public float X=0;
     public float Y=0;
     static Canvas mCanvas;
-  //  ArrayList<GameObject> objectArrayList=new ArrayList<>();
 
     public GameView(Context cxt, AttributeSet attrs) {
         super(cxt, attrs);
         setMinimumHeight(100);
         setMinimumWidth(100);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 2;
+       water = BitmapFactory.decodeResource(getResources(), R.drawable.water4, options);
     }
 
     protected void onDraw(Canvas cv) {
@@ -47,14 +49,15 @@ public class GameView extends View {
 
         mCanvas=cv;
         super.onDraw(mCanvas);
-        mCanvas.drawColor(Color.argb(100,175,244,228));
+        //mCanvas.drawColor(Color.argb(100,175,244,228));
+        mCanvas.drawBitmap(water,0,0,null);
 
         Model.setAmoeba(new Amoeba(Model.getGameWidth()/2,Model.getGameHeight()/2, amoebaBMP));
         gameObjects.add(Model.getAmoeba());
-        newDraw();
+        renderFrame();
 
     }
-    public void newDraw()
+    public void renderFrame()
     {
         invalidate();
         for(GameObject obj: gameObjects)

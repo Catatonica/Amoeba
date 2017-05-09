@@ -55,7 +55,7 @@ public class AmoebaActivity extends Activity  {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                gameView.newDraw();
+                gameView.renderFrame();
                 handler.postDelayed(this, 1000);
             }
         });
