@@ -18,9 +18,9 @@ import android.view.MotionEvent;
 import com.izyasosha.logics.Amoeba;
 import com.izyasosha.logics.Enemy;
 import com.izyasosha.logics.Food;
-import com.izyasosha.logics.GameObject;
 import com.izyasosha.logics.Model;
-import static com.izyasosha.logics.Model.gameObjects;
+import static com.izyasosha.logics.Model.enemyArrayList;
+import static com.izyasosha.logics.Model.foodArrayList;
 
 public class GameView extends View {
     Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
@@ -46,19 +46,28 @@ public class GameView extends View {
         mCanvas.drawColor(Color.argb(255,228,219,138));
 
         Model.setAmoeba(new Amoeba(Model.getGameWidth()/2,Model.getGameHeight()/2, amoebaBMP));
-        gameObjects.add(Model.getAmoeba());
         renderFrame();
     }
     public void renderFrame()
     {
         invalidate();
-        for(GameObject obj: gameObjects)
+        Model.getAmoeba().update();
+        for(Food food: foodArrayList)
         {
-            obj.update();
+            food.update();
         }
-        for(GameObject obj: gameObjects)
+        for(Enemy enemy:enemyArrayList)
         {
-            obj.draw(mCanvas);
+            enemy.update();
+        }
+        Model.getAmoeba().draw(mCanvas);
+        for(Food food:foodArrayList)
+        {
+            food.draw(mCanvas);
+        }
+        for(Enemy enemy:enemyArrayList)
+        {
+            enemy.draw(mCanvas);
         }
     }
 
@@ -72,10 +81,10 @@ public class GameView extends View {
                 switch (Model.getMode())
                 {
                     case FOOD:
-                        gameObjects.add(new Food(X,Y,foodBMP));
+                        foodArrayList.add(new Food(X,Y,foodBMP));
                         break;
                     case ENEMY:
-                        gameObjects.add(new Enemy(X,Y,enemyBMP));
+                        enemyArrayList.add(new Enemy(X,Y,enemyBMP));
                         break;
                     case NONE:
                         break;

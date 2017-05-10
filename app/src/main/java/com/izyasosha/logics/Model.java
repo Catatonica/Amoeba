@@ -18,15 +18,28 @@ public class Model {
     private Model(){    }
 
     private static Amoeba amoeba;
-    public static Amoeba getAmoeba() {
-        return amoeba;
-    }
-    public static void setAmoeba(Amoeba amoeba) {
-        Model.amoeba = amoeba;
-    }
+    public static Amoeba getAmoeba() {return amoeba;}
+    public static void setAmoeba(Amoeba amoeba) {Model.amoeba = amoeba;}
 
 
-    public static ArrayList<GameObject> gameObjects = new ArrayList<>();
+    public static void Die(GameObject gameObject)
+    {
+        if(gameObject==amoeba)
+        {
+         return;
+        }
+        if(Food.class.isInstance(gameObject)){
+            foodArrayList.remove(foodArrayList.indexOf(gameObject));
+            return;
+        }
+        if(Enemy.class.isInstance(gameObject)){
+            enemyArrayList.remove(enemyArrayList.indexOf(gameObject));
+            return;
+        }
+    }
+
+    public static ArrayList<Food> foodArrayList=new ArrayList<>();
+    public static ArrayList<Enemy> enemyArrayList=new ArrayList<>();
 
     private static CreationMode mode = CreationMode.NONE;
     public static CreationMode getMode() {

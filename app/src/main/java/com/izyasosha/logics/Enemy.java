@@ -19,6 +19,6 @@ public final class Enemy extends Creature
 
     public void update()
     {
-        x-=20;
+        x-=5;
     }
 }
