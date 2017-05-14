@@ -21,6 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -35,9 +36,10 @@ public class AmoebaActivity extends Activity  {
         Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
         Model.setAmoeba(new Amoeba(Model.getGameWidth()/2,Model.getGameHeight()/2, amoebaBMP));
         setContentView(R.layout.activity_amoeba);
+        Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
+        Model.setAmoeba(new Amoeba(Model.getGameWidth()/2,Model.getGameHeight()/2, amoebaBMP));
         stateLabel = (TextView) findViewById(R.id.StateLabel);
         gameView=(GameView) findViewById(R.id.view);
-
     }
 
     public void onClickSetFood(View view)
@@ -55,5 +57,12 @@ public class AmoebaActivity extends Activity  {
     }
 
 
+    public void showMessage()
+    {
+        CharSequence text = "The end";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(this, text, duration);
+        toast.show();
+    }
 
 }

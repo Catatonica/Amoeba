@@ -16,6 +16,8 @@ import android.view.View;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.MotionEvent;
+import android.widget.Toast;
+
 import com.izyasosha.logics.Amoeba;
 import com.izyasosha.logics.Enemy;
 import com.izyasosha.logics.Food;
@@ -47,27 +49,27 @@ public class GameView extends View {
         mCanvas=cv;
         super.onDraw(mCanvas);
         mCanvas.drawColor(Color.argb(255,228,219,138));
-
         runTimer();
         renderFrame();
     }
     private void runTimer() {
         final Handler handler = new Handler();
-        handler.post(new Runnable() {
+        boolean post = handler.post(new Runnable() {
             @Override
             public void run() {
-                if(Model.getAmoeba().getState()== State.DEATH)
-                {
+                if (Model.getAmoeba().getState() == State.DEATH) {
+                    //showMessage(this);
                     return;
                 }
-                renderFrame();
+                Model.getAmoeba().setNextState();
                 Model.moveObjects();
                 Model.checkIntersections();
                 Model.killEnemies();
-                handler.postDelayed(this, 500);
+                handler.postDelayed(this, 1000);
             }
         });
     }
+
     public void renderFrame()
     {
         Model.getAmoeba().draw(mCanvas);
@@ -81,8 +83,6 @@ public class GameView extends View {
         }
         invalidate();
     }
-
-
 
 
     public boolean onTouchEvent( MotionEvent event) {

@@ -11,9 +11,10 @@ public final class Amoeba extends Creature
     double satiety;
     double energies;
     byte R;
-    int d;
+    double d;
     int neutralTime;
     int divisionTime;
+
         //конструктор
         public Amoeba(double x, double y, Bitmap bmp)
         {
@@ -23,6 +24,7 @@ public final class Amoeba extends Creature
             satiety=80;
             energies=80;
             R=5;
+            neutralTime=0;
             setState(State.NEUTRAL);
         }
 
@@ -79,6 +81,21 @@ public final class Amoeba extends Creature
         setY(y + velocity / Math.sqrt(Math.pow(foodX - x, 2) + Math.pow(foodY - y, 2)) * (foodY - y));
     }
 
+    public Enemy findNearestEnemy()
+    {
+        Enemy nearestEnemy = null;
+        double minDist = Double.MAX_VALUE;
+        for(Enemy e: Model.enemyArrayList) {
+            double d = Math.sqrt(Math.pow(e.x - x, 2) + Math.pow(e.y - y, 2));
+            if(d < minDist) {
+                minDist = d;
+                nearestEnemy = e;
+            }
+        }
+        nearestEnemy.distanceTo=minDist;
+         return nearestEnemy;
+    }
+
     public void runAway(Enemy nearestEnemy) {
 
         double enemyX = nearestEnemy.x;
@@ -89,10 +106,13 @@ public final class Amoeba extends Creature
         setY(y - velocity / Math.sqrt(Math.pow(enemyX - x, 2) + Math.pow(enemyY - y, 2)) * (enemyY - y));
     }
 
+
     private State state;
     public State getState() {
         return state;
     }
+
+
     public void setState(State state) {
         this.state = state;
         switch (state)
@@ -101,8 +121,12 @@ public final class Amoeba extends Creature
                 velocity=1;
                 neutralTime++;
                 break;
-            case HUNGRINESS: velocity=2; break;
-            case WARNING: velocity=3; break;
+            case HUNGRINESS:
+                velocity=2;
+                break;
+            case WARNING:
+                velocity=3;
+                break;
             case REST:
                 velocity=0;
                 energies++;
@@ -120,6 +144,9 @@ public final class Amoeba extends Creature
     public void setNextState(){
         satiety-=0.25;
         energies-=0.25*velocity;
+         Enemy nearestEnemy=findNearestEnemy();
+        d=nearestEnemy.distanceTo;
+
 
         switch (state) {
             case NEUTRAL:
@@ -136,10 +163,11 @@ public final class Amoeba extends Creature
                     return;
                 }
                 if (neutralTime == 10) {
-                    setState(State.DIVISION);
                     divisionTime = 0;
+                    setState(State.DIVISION);
                     return;
                 }
+                setState(State.NEUTRAL);
                 break;
             case WARNING:
                 if (d < 2 * R) {
@@ -151,10 +179,11 @@ public final class Amoeba extends Creature
                     return;
                 }
                 if (d >= 30) {
-                    setState(State.NEUTRAL);
                     neutralTime = 0;
+                    setState(State.NEUTRAL);
                     return;
                 }
+                setState(State.WARNING);
                 break;
             case HUNGRINESS:
                 if (satiety == 0) {
@@ -170,10 +199,11 @@ public final class Amoeba extends Creature
                     return;
                 }
                 if (satiety >= 85) {
-                    setState(State.NEUTRAL);
                     neutralTime = 0;
+                    setState(State.NEUTRAL);
                     return;
                 }
+                setState(State.HUNGRINESS);
                 break;
             case REST:
                 if (d < 20) {
@@ -185,10 +215,11 @@ public final class Amoeba extends Creature
                     return;
                 }
                 if (energies > 70) {
-                    setState(State.NEUTRAL);
                     neutralTime = 0;
+                    setState(State.NEUTRAL);
                     return;
                 }
+                setState(State.REST);
                 break;
             case DIVISION:
                 if (d < R) {
@@ -207,6 +238,7 @@ public final class Amoeba extends Creature
                     setState(State.REST);
                     return;
                 }
+                setState(State.DIVISION);
                 break;
         }
         }

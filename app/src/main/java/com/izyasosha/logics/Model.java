@@ -21,28 +21,57 @@ public class Model {
     public static Amoeba getAmoeba() {return amoeba;}
     public static void setAmoeba(Amoeba amoeba) {Model.amoeba = amoeba;}
 
-    public static void kill(Food food)
+    public static void remove(Food food)
     {
         foodArrayList.remove(foodArrayList.indexOf(food));
     }
-    public static void kill(Enemy enemy)
+    public static void remove(Enemy enemy)
     {
         enemyArrayList.remove(enemyArrayList.indexOf(enemy));
     }
 
     public static void killEnemies()
     {
-
+        for(Enemy enemy:enemyArrayList)
+        {
+            if(enemy.getX()>=Model.getGameWidth()||enemy.getY()>=Model.getGameHeight()||
+                    enemy.getX()<=0||enemy.getY()<=0)
+            {
+                remove(enemy);
+            }
+        }
     }
 
     public static void checkIntersections()
     {
+        for(Food food:foodArrayList)
+        {
+            if(Model.getAmoeba().getX()==food.getX()&&Model.getAmoeba().getY()==food.getY())
+            {
+                remove(food);
+                return;
+            }
+        }
 
     }
 
     public static void moveObjects()
     {
-
+        for(Enemy enemy:enemyArrayList)
+        {
+            enemy.moveRandomly();
+        }
+        switch (amoeba.getState())
+        {
+            case NEUTRAL:
+                amoeba.moveRandomly(); break;
+            case HUNGRINESS:
+                amoeba.findFood(); break;
+            case WARNING:
+                amoeba.runAway(amoeba.findNearestEnemy()); break;
+            default:
+                return;
+        }
     }
 
     public static ArrayList<Food> foodArrayList=new ArrayList<>();
