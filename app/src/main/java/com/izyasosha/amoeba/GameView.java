@@ -32,26 +32,40 @@ public class GameView extends View {
     Bitmap enemyBMP= BitmapFactory.decodeResource(getResources(), R.drawable.enemy);
     Bitmap foodBMP= BitmapFactory.decodeResource(getResources(), R.drawable.food1);
 
-    public float X=0;
-    public float Y=0;
+
     static Canvas mCanvas;
 
     public GameView(Context cxt, AttributeSet attrs) {
         super(cxt, attrs);
         setMinimumHeight(100);
         setMinimumWidth(100);
+
+
     }
 
-    protected void onDraw(Canvas cv) {
-        Model.setGameHeight(cv.getHeight());
-        Model.setGameWidth(cv.getWidth());
+    private boolean initialized = false;
 
-        mCanvas=cv;
-        super.onDraw(mCanvas);
-        mCanvas.drawColor(Color.argb(255,228,219,138));
-        runTimer();
+    @Override
+    protected void onDraw(Canvas cv) {
+        super.onDraw(cv);
+
+        if(!initialized) {
+            initialized = true;
+            Model.setGameHeight(cv.getHeight());
+            Model.setGameWidth(cv.getWidth());
+
+            Model.getAmoeba().setX(Model.getGameWidth() / 2);
+            Model.getAmoeba().setY(Model.getGameHeight() / 2);
+
+            mCanvas = cv;
+            runTimer();
+        }
+        mCanvas.drawColor(Color.argb(255, 228, 219, 138));
         renderFrame();
     }
+
+
+
     private void runTimer() {
         final Handler handler = new Handler();
         boolean post = handler.post(new Runnable() {
@@ -61,11 +75,13 @@ public class GameView extends View {
                     //showMessage(this);
                     return;
                 }
+                renderFrame();
+
                 Model.getAmoeba().setNextState();
                 Model.moveObjects();
                 Model.checkIntersections();
                 Model.killEnemies();
-                handler.postDelayed(this, 1000);
+                handler.postDelayed(this, 500);
             }
         });
     }
@@ -87,11 +103,10 @@ public class GameView extends View {
 
     public boolean onTouchEvent( MotionEvent event) {
         // координаты нажатия
-        X=event.getX();
-        Y=event.getY();
+        double X=event.getX();
+        double Y=event.getY();
         // переключатель в зависимости от типа события
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
+        if (event.getAction() == MotionEvent.ACTION_DOWN)
                 switch (Model.getMode())
                 {
                     case FOOD:
@@ -103,12 +118,6 @@ public class GameView extends View {
                     case NONE:
                         break;
                 }
-                invalidate();
-                break;
-            case MotionEvent.ACTION_MOVE: // движени
-            case MotionEvent.ACTION_UP: // отпускание
-            case MotionEvent.ACTION_CANCEL: // ничего не делаем
-        }
         return true;
     }
 }

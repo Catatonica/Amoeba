@@ -11,7 +11,7 @@ public final class Food extends GameObject
 {
     public Food(double x, double y, Bitmap bmp)
     {
-        this.bmp = bmp;                    //возвращаем рисунок
+        this.bmp = bmp;
         this.x = x;
         this.y = y;
     }

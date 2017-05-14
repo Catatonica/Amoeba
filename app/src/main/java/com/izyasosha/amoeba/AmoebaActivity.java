@@ -34,10 +34,8 @@ public class AmoebaActivity extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
-        Model.setAmoeba(new Amoeba(Model.getGameWidth()/2,Model.getGameHeight()/2, amoebaBMP));
+        Model.setAmoeba(new Amoeba(amoebaBMP));
         setContentView(R.layout.activity_amoeba);
-        Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
-        Model.setAmoeba(new Amoeba(Model.getGameWidth()/2,Model.getGameHeight()/2, amoebaBMP));
         stateLabel = (TextView) findViewById(R.id.StateLabel);
         gameView=(GameView) findViewById(R.id.view);
     }
