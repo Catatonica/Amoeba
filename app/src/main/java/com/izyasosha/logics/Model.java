@@ -61,7 +61,17 @@ public class Model {
         {
             enemy.moveRandomly();
         }
-        amoeba.setNextState();
+        switch (amoeba.getState())
+        {
+            case NEUTRAL:
+                amoeba.moveRandomly(); break;
+            case HUNGRINESS:
+                amoeba.findFood(); break;
+            case WARNING:
+                amoeba.runAway(amoeba.findNearestEnemy()); break;
+            default:
+                return;
+        }
     }
 
     public static ArrayList<Food> foodArrayList=new ArrayList<>();

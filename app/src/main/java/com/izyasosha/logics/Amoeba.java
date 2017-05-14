@@ -119,16 +119,13 @@ public final class Amoeba extends Creature
         {
             case NEUTRAL:
                 velocity=1;
-                moveRandomly();
                 neutralTime++;
                 break;
             case HUNGRINESS:
                 velocity=2;
-                findFood();
                 break;
             case WARNING:
                 velocity=3;
-                runAway(findNearestEnemy());
                 break;
             case REST:
                 velocity=0;
