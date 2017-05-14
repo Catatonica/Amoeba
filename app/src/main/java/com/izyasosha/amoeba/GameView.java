@@ -51,15 +51,6 @@ public class GameView extends View {
     public void renderFrame()
     {
         invalidate();
-        Model.getAmoeba().update();
-        for(Food food: foodArrayList)
-        {
-            food.update();
-        }
-        for(Enemy enemy:enemyArrayList)
-        {
-            enemy.update();
-        }
         Model.getAmoeba().draw(mCanvas);
         for(Food food:foodArrayList)
         {
@@ -70,6 +61,9 @@ public class GameView extends View {
             enemy.draw(mCanvas);
         }
     }
+
+
+
 
     public boolean onTouchEvent( MotionEvent event) {
         // координаты нажатия

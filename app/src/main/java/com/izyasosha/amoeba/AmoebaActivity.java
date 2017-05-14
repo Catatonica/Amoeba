@@ -55,7 +55,14 @@ public class AmoebaActivity extends Activity  {
         handler.post(new Runnable() {
             @Override
             public void run() {
+                if(Model.getAmoeba().getState()==State.DEATH)
+                {
+                    return;
+                }
                 gameView.renderFrame();
+                Model.moveObjects();
+                Model.checkIntersections();
+                Model.killEnemies();
                 handler.postDelayed(this, 1000);
             }
         });

@@ -21,21 +21,28 @@ public class Model {
     public static Amoeba getAmoeba() {return amoeba;}
     public static void setAmoeba(Amoeba amoeba) {Model.amoeba = amoeba;}
 
-
-    public static void Die(GameObject gameObject)
+    public static void kill(Food food)
     {
-        if(gameObject==amoeba)
-        {
-         return;
-        }
-        if(Food.class.isInstance(gameObject)){
-            foodArrayList.remove(foodArrayList.indexOf(gameObject));
-            return;
-        }
-        if(Enemy.class.isInstance(gameObject)){
-            enemyArrayList.remove(enemyArrayList.indexOf(gameObject));
-            return;
-        }
+        foodArrayList.remove(foodArrayList.indexOf(food));
+    }
+    public static void kill(Enemy enemy)
+    {
+        enemyArrayList.remove(enemyArrayList.indexOf(enemy));
+    }
+
+    public static void killEnemies()
+    {
+
+    }
+
+    public static void checkIntersections()
+    {
+
+    }
+
+    public static void moveObjects()
+    {
+
     }
 
     public static ArrayList<Food> foodArrayList=new ArrayList<>();

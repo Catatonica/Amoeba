@@ -3,27 +3,17 @@ package com.izyasosha.logics;
 /**
  * Created by Алексей on 01.05.2017.
  */
-import android.app.Application;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.widget.TextView;
-
 import java.lang.Math;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import com.izyasosha.amoeba.AmoebaActivity;
-import com.izyasosha.amoeba.GameView;
-import com.izyasosha.amoeba.R;
 
 public final class Amoeba extends Creature
 {
-    int satiety;
-    int energies;
+    double satiety;
+    double energies;
     byte R;
-    byte t=0;
-    int d=0;
+    int d;
+    int neutralTime;
+    int divisionTime;
         //конструктор
         public Amoeba(double x, double y, Bitmap bmp)
         {
@@ -63,31 +53,7 @@ public final class Amoeba extends Creature
             this.y = y;
         }
     }
-    private State state;
-    public State getState() {
-        return state;
-    }
-    public void setState(State state) {
-        this.state = state;
-        switch (state)
-        {
-            case NEUTRAL:
-                velocity=5;
-                t++;
-                break;
-            case HUNGRINESS: velocity=10; break;
-            case WARNING: velocity=15; break;
-            case REST: velocity=0; break;
-            case DEATH:
-                velocity=0;
-                Model.Die(this);
-                break;
-            case DIVISION: velocity=0; break;
-        }
-    }
 
-
-    public void update(){};
     public void findFood() {
         if (Model.foodArrayList.size() == 0) {
             moveRandomly(); //Если еды нет, вызвать случайное передвижение
@@ -123,84 +89,128 @@ public final class Amoeba extends Creature
         setY(y - velocity / Math.sqrt(Math.pow(enemyX - x, 2) + Math.pow(enemyY - y, 2)) * (enemyY - y));
     }
 
-
-    public void setNextState(){
-        satiety--;
-
+    private State state;
+    public State getState() {
+        return state;
+    }
+    public void setState(State state) {
+        this.state = state;
         switch (state)
         {
             case NEUTRAL:
-                if(d<20)
-                {
-                   setState(State.WARNING);
+                velocity=1;
+                neutralTime++;
+                break;
+            case HUNGRINESS: velocity=2; break;
+            case WARNING: velocity=3; break;
+            case REST:
+                velocity=0;
+                energies++;
+                break;
+            case DEATH:
+                velocity=0;
+                break;
+            case DIVISION:
+                velocity=0;
+                divisionTime++;
+                break;
+        }
+    }
+
+    public void setNextState(){
+        satiety-=0.25;
+        energies-=0.25*velocity;
+
+        switch (state) {
+            case NEUTRAL:
+                if (d < 20) {
+                    setState(State.WARNING);
                     return;
                 }
-                if(satiety<70)
-                {
+                if (satiety < 70) {
                     setState(State.HUNGRINESS);
                     return;
                 }
-                if(energies<50)
-                {
+                if (energies < 50) {
                     setState(State.REST);
                     return;
                 }
-                if(t==10)
-                {
+                if (neutralTime == 10) {
                     setState(State.DIVISION);
+                    divisionTime = 0;
                     return;
                 }
                 break;
             case WARNING:
-                if(d<2*R)
-                {
+                if (d < 2 * R) {
                     setState(State.DEATH);
                     return;
                 }
-                if(satiety<70)
-                {
+                if (satiety < 70) {
                     setState(State.HUNGRINESS);
                     return;
                 }
-                if(d>=30)
-                {
+                if (d >= 30) {
                     setState(State.NEUTRAL);
-                    t=0;
+                    neutralTime = 0;
                     return;
                 }
                 break;
             case HUNGRINESS:
-                if(satiety==0)
-                {
+                if (satiety == 0) {
                     setState(State.DEATH);
                     return;
                 }
-                if(d<20)
-                {
+                if (d < 20) {
                     setState(State.WARNING);
                     return;
                 }
-                if(energies<0.2*satiety)
-                {
+                if (energies < 0.2 * satiety) {
                     setState(State.REST);
                     return;
                 }
-                if(satiety>=85)
-                {
+                if (satiety >= 85) {
                     setState(State.NEUTRAL);
+                    neutralTime = 0;
                     return;
                 }
-
-
-
-
-
-
-
-
-
+                break;
+            case REST:
+                if (d < 20) {
+                    setState(State.WARNING);
+                    return;
+                }
+                if (energies > 0.5 * satiety) {
+                    setState(State.HUNGRINESS);
+                    return;
+                }
+                if (energies > 70) {
+                    setState(State.NEUTRAL);
+                    neutralTime = 0;
+                    return;
+                }
+                break;
+            case DIVISION:
+                if (d < R) {
+                    setState(State.DEATH);
+                    return;
+                }
+                if (divisionTime == 3 && d < 20) {
+                    setState(State.WARNING);
+                    return;
+                }
+                if (divisionTime == 3 && satiety < 70) {
+                    setState(State.HUNGRINESS);
+                    return;
+                }
+                if (divisionTime == 3 && energies < 50) {
+                    setState(State.REST);
+                    return;
+                }
+                break;
+        }
         }
     }
 
 
-}
+
