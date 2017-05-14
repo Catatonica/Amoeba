@@ -30,14 +30,16 @@ public class AmoebaActivity extends Activity  {
     TextView stateLabel;
     GameView gameView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
-        Model.setAmoeba(new Amoeba(amoebaBMP));
         setContentView(R.layout.activity_amoeba);
         stateLabel = (TextView) findViewById(R.id.StateLabel);
         gameView=(GameView) findViewById(R.id.view);
+        Model.setAmoeba(new Amoeba(amoebaBMP,100,100));
+        runTimer();
     }
 
     public void onClickSetFood(View view)
@@ -54,8 +56,28 @@ public class AmoebaActivity extends Activity  {
         stateLabel.setText(state.toString());
     }
 
+    private void runTimer() {
+        final Handler handler = new Handler();
+        boolean post = handler.post(new Runnable() {
+            @Override
+            public void run() {
 
-    public void showMessage()
+                gameView.renderFrame();
+                if (Model.getAmoeba().getState() == State.DEATH) {
+                    showMessage();
+                    return;
+                }
+                Model.getAmoeba().setNextState();
+                Model.moveObjects();
+                Model.checkIntersections();
+                Model.killEnemies();
+                handler.postDelayed(this, 500);
+            }
+        });
+    }
+
+
+    private void showMessage()
     {
         CharSequence text = "The end";
         int duration = Toast.LENGTH_SHORT;

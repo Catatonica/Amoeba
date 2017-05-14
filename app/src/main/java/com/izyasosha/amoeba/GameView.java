@@ -39,51 +39,15 @@ public class GameView extends View {
         super(cxt, attrs);
         setMinimumHeight(100);
         setMinimumWidth(100);
-
-
+        setWillNotDraw(false);
     }
 
-    private boolean initialized = false;
 
     @Override
     protected void onDraw(Canvas cv) {
         super.onDraw(cv);
-
-        if(!initialized) {
-            initialized = true;
-            Model.setGameHeight(cv.getHeight());
-            Model.setGameWidth(cv.getWidth());
-
-            Model.getAmoeba().setX(Model.getGameWidth() / 2);
-            Model.getAmoeba().setY(Model.getGameHeight() / 2);
-
-            mCanvas = cv;
-            runTimer();
-        }
         mCanvas.drawColor(Color.argb(255, 228, 219, 138));
         renderFrame();
-    }
-
-
-
-    private void runTimer() {
-        final Handler handler = new Handler();
-        boolean post = handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (Model.getAmoeba().getState() == State.DEATH) {
-                    //showMessage(this);
-                    return;
-                }
-                renderFrame();
-
-                Model.getAmoeba().setNextState();
-                Model.moveObjects();
-                Model.checkIntersections();
-                Model.killEnemies();
-                handler.postDelayed(this, 500);
-            }
-        });
     }
 
     public void renderFrame()

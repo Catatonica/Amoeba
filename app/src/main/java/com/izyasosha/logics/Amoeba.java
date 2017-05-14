@@ -14,7 +14,7 @@ public final class Amoeba extends Creature
     private int divisionTime;
 
         //конструктор
-        public Amoeba(Bitmap bmp)
+        public Amoeba(Bitmap bmp, double x, double y)
         {
             this.bmp = bmp;
             satiety=80;
@@ -22,6 +22,8 @@ public final class Amoeba extends Creature
             size=5;
             neutralTime=0;
             setState(State.NEUTRAL);
+            setX(x);
+            setY(y);
         }
 
 
