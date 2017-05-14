@@ -19,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -52,11 +53,11 @@ public class AmoebaActivity extends Activity  {
 
     private void runTimer() {
         final Handler handler = new Handler();
-        handler.post(new Runnable() {
+        boolean post = handler.post(new Runnable() {
             @Override
             public void run() {
-                if(Model.getAmoeba().getState()==State.DEATH)
-                {
+                if (Model.getAmoeba().getState() == State.DEATH) {
+                    showMessage();
                     return;
                 }
                 gameView.renderFrame();
@@ -66,6 +67,14 @@ public class AmoebaActivity extends Activity  {
                 handler.postDelayed(this, 1000);
             }
         });
+    }
+
+    private void showMessage()
+    {
+        CharSequence text = "The end";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(this, text, duration);
+        toast.show();
     }
 
 }

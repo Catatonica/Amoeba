@@ -50,7 +50,7 @@ public class GameView extends View {
     }
     public void renderFrame()
     {
-        invalidate();
+
         Model.getAmoeba().draw(mCanvas);
         for(Food food:foodArrayList)
         {
@@ -60,9 +60,9 @@ public class GameView extends View {
         {
             enemy.draw(mCanvas);
         }
+        invalidate();
+
     }
-
-
 
 
     public boolean onTouchEvent( MotionEvent event) {
