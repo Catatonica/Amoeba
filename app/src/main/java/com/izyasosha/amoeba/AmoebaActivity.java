@@ -1,6 +1,8 @@
 package com.izyasosha.amoeba;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -32,9 +34,10 @@ public class AmoebaActivity extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_amoeba);
+        Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
+        Model.setAmoeba(new Amoeba(Model.getGameWidth()/2,Model.getGameHeight()/2, amoebaBMP));
         stateLabel = (TextView) findViewById(R.id.StateLabel);
         gameView=(GameView) findViewById(R.id.view);
-        runTimer();
     }
 
     public void onClickSetFood(View view)
@@ -51,31 +54,11 @@ public class AmoebaActivity extends Activity  {
         stateLabel.setText(state.toString());
     }
 
-    private void runTimer() {
-        final Handler handler = new Handler();
-        boolean post = handler.post(new Runnable() {
-            @Override
-            public void run() {
-                gameView.renderFrame();
-                if (Model.getAmoeba().getState() == State.DEATH) {
-                    showMessage();
-                    return;
-                }
-                Model.getAmoeba().setNextState();
-                Model.moveObjects();
-                Model.checkIntersections();
-                Model.killEnemies();
-                handler.postDelayed(this, 1000);
-            }
-        });
-    }
-
-    private void showMessage()
+    public void showMessage()
     {
         CharSequence text = "The end";
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(this, text, duration);
         toast.show();
     }
-
 }
