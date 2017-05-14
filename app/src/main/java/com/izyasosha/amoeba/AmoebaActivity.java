@@ -1,6 +1,8 @@
 package com.izyasosha.amoeba;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -30,10 +32,12 @@ public class AmoebaActivity extends Activity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
+        Model.setAmoeba(new Amoeba(Model.getGameWidth()/2,Model.getGameHeight()/2, amoebaBMP));
         setContentView(R.layout.activity_amoeba);
         stateLabel = (TextView) findViewById(R.id.StateLabel);
         gameView=(GameView) findViewById(R.id.view);
-        runTimer();
+
     }
 
     public void onClickSetFood(View view)
@@ -50,22 +54,6 @@ public class AmoebaActivity extends Activity  {
         stateLabel.setText(state.toString());
     }
 
-    private void runTimer() {
-        final Handler handler = new Handler();
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if(Model.getAmoeba().getState()==State.DEATH)
-                {
-                    return;
-                }
-                gameView.renderFrame();
-                Model.moveObjects();
-                Model.checkIntersections();
-                Model.killEnemies();
-                handler.postDelayed(this, 1000);
-            }
-        });
-    }
+
 
 }

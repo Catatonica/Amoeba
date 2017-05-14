@@ -45,11 +45,7 @@
             android:textSize="18sp"
             android:textColor="@color/light_gray" />
 
-        android:editable="false"
-        android:freezesText="false"
-        android:singleLine="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        />
+
 
 
         <LinearLayout
@@ -133,7 +129,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/BottomLayout"
         android:id="@+id/TopLayout"
@@ -155,7 +150,7 @@
                 android:onClick="onClickSetFood"
                 android:scaleType="fitXY"
                 android:src="@drawable/food"
-               />
+                />
 
             <View
                 android:layout_width="match_parent"
@@ -186,9 +181,7 @@
                 android:onClick="onClickSetDanger"
                 android:scaleType="fitXY"
                 android:src="@drawable/danger"
-              />
-            />
-
+                />
         </LinearLayout>
 
         <view

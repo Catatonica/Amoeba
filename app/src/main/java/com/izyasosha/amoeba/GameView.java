@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.Picture;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.graphics.Bitmap;
@@ -19,11 +20,13 @@ import com.izyasosha.logics.Amoeba;
 import com.izyasosha.logics.Enemy;
 import com.izyasosha.logics.Food;
 import com.izyasosha.logics.Model;
+import com.izyasosha.logics.State;
+
 import static com.izyasosha.logics.Model.enemyArrayList;
 import static com.izyasosha.logics.Model.foodArrayList;
 
 public class GameView extends View {
-    Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
+
     Bitmap enemyBMP= BitmapFactory.decodeResource(getResources(), R.drawable.enemy);
     Bitmap foodBMP= BitmapFactory.decodeResource(getResources(), R.drawable.food1);
 
@@ -45,12 +48,28 @@ public class GameView extends View {
         super.onDraw(mCanvas);
         mCanvas.drawColor(Color.argb(255,228,219,138));
 
-        Model.setAmoeba(new Amoeba(Model.getGameWidth()/2,Model.getGameHeight()/2, amoebaBMP));
+        runTimer();
         renderFrame();
+    }
+    private void runTimer() {
+        final Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if(Model.getAmoeba().getState()== State.DEATH)
+                {
+                    return;
+                }
+                renderFrame();
+                Model.moveObjects();
+                Model.checkIntersections();
+                Model.killEnemies();
+                handler.postDelayed(this, 500);
+            }
+        });
     }
     public void renderFrame()
     {
-        invalidate();
         Model.getAmoeba().draw(mCanvas);
         for(Food food:foodArrayList)
         {
@@ -60,6 +79,7 @@ public class GameView extends View {
         {
             enemy.draw(mCanvas);
         }
+        invalidate();
     }
 
 
