@@ -27,101 +27,106 @@
             android:textSize="18sp"
             android:textColor="@color/light_gray" />
 
-        <TextView
-
-            android:id="@+id/State"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-
-            android:background="@color/nya1"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/neutral"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            tools:textSize="24sp"
-            tools:textStyle="normal|italic"
-            android:fontFamily="casual"
-            android:textSize="18sp"
-            android:textColor="@color/light_gray" />
-
-
-
-
         <LinearLayout
-            android:id="@+id/ProgressBarLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+            <TextView
 
-                <ProgressBar
-                    android:id="@+id/progressSatiety"
-                    style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
+                android:id="@+id/State"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:background="@color/nya1"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/neutral"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                tools:textSize="24sp"
+                tools:textStyle="normal|italic"
+                android:fontFamily="casual"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray" />
+
+            <LinearLayout
+                android:id="@+id/ProgressBarLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:progress="25"
-                    android:scaleY="5"
-                    android:minHeight="25dp"
-                    android:visibility="visible"
-                    android:background="@color/nya2"
-                    android:progressBackgroundTint="@color/yellow"
-                    android:progressTint="@android:color/holo_orange_light" />
+                    android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:text="@string/satiety"
-                    android:textAppearance="@style/TextAppearance.AppCompat"
-                    android:fontFamily="casual"
-                    android:textColor="@color/light_gray"
-                    android:textAlignment="center"
-                    android:gravity="center_horizontal"/>
-            </FrameLayout>
+                    <ProgressBar
+                        android:id="@+id/progressSatiety"
+                        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:progress="25"
+                        android:scaleY="5"
+                        android:minHeight="25dp"
+                        android:visibility="visible"
+                        android:background="@color/nya2"
+                        android:progressBackgroundTint="@color/yellow"
+                        android:progressTint="@android:color/holo_orange_light" />
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/satiety"
+                        android:textAppearance="@style/TextAppearance.AppCompat"
+                        android:fontFamily="casual"
+                        android:textColor="@color/light_gray"
+                        android:textAlignment="center"
+                        android:gravity="center_horizontal"/>
+                </FrameLayout>
 
-                <ProgressBar
-                    android:id="@+id/progressEnergies"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:progress="45"
-                    android:scaleY="5"
-                    android:minHeight="25dp"
-                    android:background="@color/nya2"
-                    android:progressBackgroundTint="@color/nya1"
-                    android:progressTint="@android:color/holo_blue_bright" />
+                    android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:text="@string/energies"
-                    android:textAppearance="@style/TextAppearance.AppCompat"
-                    android:fontFamily="casual"
-                    android:textColor="@color/light_gray"
-                    android:textAlignment="center"
-                    android:gravity="center_horizontal"/>
-            </FrameLayout>
+                    <ProgressBar
+                        android:id="@+id/progressEnergies"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:progress="45"
+                        android:scaleY="5"
+                        android:minHeight="25dp"
+                        android:background="@color/nya2"
+                        android:progressBackgroundTint="@color/nya1"
+                        android:progressTint="@android:color/holo_blue_bright" />
 
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/energies"
+                        android:textAppearance="@style/TextAppearance.AppCompat"
+                        android:fontFamily="casual"
+                        android:textColor="@color/light_gray"
+                        android:textAlignment="center"
+                        android:gravity="center_horizontal"/>
+                </FrameLayout>
+
+            </LinearLayout>
         </LinearLayout>
+
+
     </LinearLayout>
 
     <LinearLayout

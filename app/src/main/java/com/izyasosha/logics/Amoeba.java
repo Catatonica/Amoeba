@@ -3,12 +3,26 @@ package com.izyasosha.logics;
 /**
  * Created by Алексей on 01.05.2017.
  */
+import android.app.Application;
 import android.graphics.Bitmap;
+import android.widget.Toast;
+
+import com.izyasosha.amoeba.AmoebaActivity;
+
 import java.lang.Math;
 
 public final class Amoeba extends Creature
 {
     private double satiety;
+
+    public double getSatiety() {
+        return satiety;
+    }
+
+    public double getEnergies() {
+        return energies;
+    }
+
     private double energies;
     private int neutralTime;
     private int divisionTime;
@@ -19,13 +33,22 @@ public final class Amoeba extends Creature
             this.bmp = bmp;
             satiety=80;
             energies=80;
-            size=5;
+            size=25;
             neutralTime=0;
+            divisionTime=0;
             setState(State.NEUTRAL);
             setX(x);
             setY(y);
         }
 
+    public void increaseSatiety()
+    {
+        satiety+=5;
+    }
+    public void increaseEnergies()
+    {
+        energies+=1;
+    }
 
     //не даёт выйти координатам за край поля, вместо этого телепортирует на противоположный край
     @Override
@@ -83,10 +106,11 @@ public final class Amoeba extends Creature
     {
         Enemy nearestEnemy = null;
         double minDist = Double.MAX_VALUE;
-        for(Enemy e: Model.enemyArrayList) {
-            double d = Math.sqrt(Math.pow(e.x - x, 2) + Math.pow(e.y - y, 2));
-            if(d < minDist) {
-                minDist = d;
+        for(Enemy e: Model.enemyArrayList)
+        {
+            e.distanceTo = Math.sqrt(Math.pow(e.x - x, 2) + Math.pow(e.y - y, 2));
+            if(e.distanceTo < minDist) {
+                minDist = e.distanceTo;
                 nearestEnemy = e;
             }
         }
@@ -110,23 +134,25 @@ public final class Amoeba extends Creature
     }
 
 
+
     public void setState(State state) {
+        AmoebaActivity.setStateLabel(state);
         this.state = state;
         switch (state)
         {
             case NEUTRAL:
-                velocity=1;
+                velocity=5;
                 neutralTime++;
                 break;
             case HUNGRINESS:
-                velocity=2;
+                velocity=10;
                 break;
             case WARNING:
-                velocity=3;
+                velocity=15;
                 break;
             case REST:
                 velocity=0;
-                energies++;
+                increaseEnergies();
                 break;
             case DEATH:
                 velocity=0;
@@ -139,14 +165,14 @@ public final class Amoeba extends Creature
     }
 
     public void setNextState(){
-        satiety-=0.25;
-        energies-=0.25*velocity;
+        satiety-=0.5;
+        energies-=0.05*velocity;
         Enemy nearestEnemy=findNearestEnemy();
 
 
         switch (state) {
             case NEUTRAL:
-                if (nearestEnemy!=null && nearestEnemy.distanceTo < 20) {
+                if (nearestEnemy!=null && nearestEnemy.distanceTo < 100) {
                     setState(State.WARNING);
                     return;
                 }
@@ -158,7 +184,7 @@ public final class Amoeba extends Creature
                     setState(State.REST);
                     return;
                 }
-                if (neutralTime == 10) {
+                if (neutralTime == 100) {
                     divisionTime = 0;
                     setState(State.DIVISION);
                     return;
@@ -174,7 +200,7 @@ public final class Amoeba extends Creature
                     setState(State.HUNGRINESS);
                     return;
                 }
-                if (nearestEnemy==null || nearestEnemy.distanceTo >= 30) {
+                if (nearestEnemy==null || nearestEnemy.distanceTo >= 150) {
                     neutralTime = 0;
                     setState(State.NEUTRAL);
                     return;
@@ -186,7 +212,7 @@ public final class Amoeba extends Creature
                     setState(State.DEATH);
                     return;
                 }
-                if (nearestEnemy!=null && nearestEnemy.distanceTo < 20) {
+                if (nearestEnemy!=null && nearestEnemy.distanceTo < 100) {
                     setState(State.WARNING);
                     return;
                 }
@@ -202,7 +228,7 @@ public final class Amoeba extends Creature
                 setState(State.HUNGRINESS);
                 break;
             case REST:
-                if (nearestEnemy!=null && nearestEnemy.distanceTo < 20) {
+                if (nearestEnemy!=null && nearestEnemy.distanceTo < 100) {
                     setState(State.WARNING);
                     return;
                 }
@@ -222,7 +248,7 @@ public final class Amoeba extends Creature
                     setState(State.DEATH);
                     return;
                 }
-                if (divisionTime == 3 && nearestEnemy!=null && nearestEnemy.distanceTo < 20) {
+                if (divisionTime == 3 && nearestEnemy!=null && nearestEnemy.distanceTo < 100) {
                     setState(State.WARNING);
                     return;
                 }

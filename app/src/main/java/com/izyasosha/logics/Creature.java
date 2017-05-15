@@ -8,7 +8,7 @@ import java.util.Random;
 
 public abstract class Creature extends GameObject
 {
-    protected byte velocity;
+    protected byte velocity=5;
 
     protected void moveRandomly()
     {

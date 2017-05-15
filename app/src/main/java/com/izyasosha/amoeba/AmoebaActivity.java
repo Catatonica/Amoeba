@@ -27,7 +27,8 @@ import org.w3c.dom.Text;
 
 public class AmoebaActivity extends Activity  {
 
-    TextView stateLabel;
+    static TextView stateLabel;
+    static ProgressBar energiesBar, satietyBar;
     GameView gameView;
 
 
@@ -36,10 +37,18 @@ public class AmoebaActivity extends Activity  {
         super.onCreate(savedInstanceState);
         Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
         setContentView(R.layout.activity_amoeba);
-        stateLabel = (TextView) findViewById(R.id.StateLabel);
+        stateLabel = (TextView) findViewById(R.id.State);
+        energiesBar=(ProgressBar) findViewById(R.id.progressEnergies);
+        satietyBar=(ProgressBar) findViewById(R.id.progressSatiety);
         gameView=(GameView) findViewById(R.id.view);
         Model.setAmoeba(new Amoeba(amoebaBMP,100,100));
         runTimer();
+    }
+
+    public static void setProgress(double energies, double satiety)
+    {
+        energiesBar.setProgress((int)energies);
+        satietyBar.setProgress((int)satiety);
     }
 
     public void onClickSetFood(View view)
@@ -52,7 +61,7 @@ public class AmoebaActivity extends Activity  {
         Model.setMode(Model.CreationMode.ENEMY);
     }
 
-    public void setStateLabel(State state){
+    public static void setStateLabel(State state){
         stateLabel.setText(state.toString());
     }
 
@@ -61,12 +70,12 @@ public class AmoebaActivity extends Activity  {
         boolean post = handler.post(new Runnable() {
             @Override
             public void run() {
-
-                gameView.renderFrame();
+                gameView.invalidate();
                 if (Model.getAmoeba().getState() == State.DEATH) {
                     showMessage();
                     return;
                 }
+                setProgress(Model.getAmoeba().getEnergies(),Model.getAmoeba().getSatiety());
                 Model.getAmoeba().setNextState();
                 Model.moveObjects();
                 Model.checkIntersections();

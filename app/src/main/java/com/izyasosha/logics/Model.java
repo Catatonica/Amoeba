@@ -46,9 +46,11 @@ public class Model {
     {
         for(Food food:foodArrayList)
         {
-            if(Model.getAmoeba().getX()==food.getX()&&Model.getAmoeba().getY()==food.getY())
+            double d = Math.sqrt(Math.pow(food.x - amoeba.x, 2) + Math.pow(food.y - amoeba.y, 2));
+            if(d<amoeba.size)
             {
                 remove(food);
+                amoeba.increaseSatiety();
                 return;
             }
         }

@@ -37,31 +37,31 @@ public class GameView extends View {
 
     public GameView(Context cxt, AttributeSet attrs) {
         super(cxt, attrs);
+        mCanvas = new Canvas();
         setMinimumHeight(100);
         setMinimumWidth(100);
         setWillNotDraw(false);
     }
 
-
+    boolean initialized = false;
     @Override
     protected void onDraw(Canvas cv) {
+        if(!initialized) {
+            initialized = true;
+            Model.setGameHeight(cv.getHeight());
+            Model.setGameWidth(cv.getWidth());
+        }
         super.onDraw(cv);
-        mCanvas.drawColor(Color.argb(255, 228, 219, 138));
-        renderFrame();
-    }
-
-    public void renderFrame()
-    {
-        Model.getAmoeba().draw(mCanvas);
+        cv.drawColor(Color.argb(255, 228, 219, 138));
+        Model.getAmoeba().draw(cv);
         for(Food food:foodArrayList)
         {
-            food.draw(mCanvas);
+            food.draw(cv);
         }
         for(Enemy enemy:enemyArrayList)
         {
-            enemy.draw(mCanvas);
+            enemy.draw(cv);
         }
-        invalidate();
     }
 
 
