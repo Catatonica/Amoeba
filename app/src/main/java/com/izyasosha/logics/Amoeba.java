@@ -49,6 +49,10 @@ public final class Amoeba extends Creature
     {
         energies+=1;
     }
+    public void decreaseEnergies()
+    {
+        energies-=1;
+    }
 
     //не даёт выйти координатам за край поля, вместо этого телепортирует на противоположный край
     @Override
@@ -141,14 +145,14 @@ public final class Amoeba extends Creature
         switch (state)
         {
             case NEUTRAL:
-                velocity=5;
+                velocity=10;
                 neutralTime++;
                 break;
             case HUNGRINESS:
-                velocity=10;
+                velocity=20;
                 break;
             case WARNING:
-                velocity=15;
+                velocity=30;
                 break;
             case REST:
                 velocity=0;
@@ -160,13 +164,14 @@ public final class Amoeba extends Creature
             case DIVISION:
                 velocity=0;
                 divisionTime++;
+                decreaseEnergies();
                 break;
         }
     }
 
     public void setNextState(){
-        satiety-=0.5;
-        energies-=0.05*velocity;
+        satiety-=0.1;
+        energies-=0.01*velocity;
         Enemy nearestEnemy=findNearestEnemy();
 
 
@@ -176,15 +181,15 @@ public final class Amoeba extends Creature
                     setState(State.WARNING);
                     return;
                 }
-                if (satiety < 70) {
-                    setState(State.HUNGRINESS);
-                    return;
-                }
-                if (energies < 50) {
+                if (energies < 0.5*satiety) {
                     setState(State.REST);
                     return;
                 }
-                if (neutralTime == 100) {
+                if (satiety < 70) {
+                setState(State.HUNGRINESS);
+                return;
+                 }
+                if (neutralTime == 20) {
                     divisionTime = 0;
                     setState(State.DIVISION);
                     return;
@@ -208,7 +213,7 @@ public final class Amoeba extends Creature
                 setState(State.WARNING);
                 break;
             case HUNGRINESS:
-                if (satiety == 0) {
+                if (satiety <= 0) {
                     setState(State.DEATH);
                     return;
                 }
@@ -216,7 +221,7 @@ public final class Amoeba extends Creature
                     setState(State.WARNING);
                     return;
                 }
-                if (energies < 0.2 * satiety) {
+                if (energies < 0.3 * satiety) {
                     setState(State.REST);
                     return;
                 }
@@ -232,11 +237,11 @@ public final class Amoeba extends Creature
                     setState(State.WARNING);
                     return;
                 }
-                if (energies > 0.5 * satiety) {
+                if (energies > 0.7 * satiety) {
                     setState(State.HUNGRINESS);
                     return;
                 }
-                if (energies > 70) {
+                if (energies >= 85) {
                     neutralTime = 0;
                     setState(State.NEUTRAL);
                     return;
@@ -248,15 +253,15 @@ public final class Amoeba extends Creature
                     setState(State.DEATH);
                     return;
                 }
-                if (divisionTime == 3 && nearestEnemy!=null && nearestEnemy.distanceTo < 100) {
+                if (divisionTime == 10 && nearestEnemy!=null && nearestEnemy.distanceTo < 100) {
                     setState(State.WARNING);
                     return;
                 }
-                if (divisionTime == 3 && satiety < 70) {
+                if (divisionTime == 10 && satiety < 70) {
                     setState(State.HUNGRINESS);
                     return;
                 }
-                if (divisionTime == 3 && energies < 50) {
+                if (divisionTime == 10 && energies < 70) {
                     setState(State.REST);
                     return;
                 }

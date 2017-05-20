@@ -40,15 +40,14 @@
                 android:layout_weight="1"
 
                 android:background="@color/nya1"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="@string/neutral"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 tools:textSize="24sp"
                 tools:textStyle="normal|italic"
                 android:fontFamily="casual"
                 android:textSize="18sp"
-                android:textColor="@color/light_gray" />
+                android:textColor="@color/light_gray"
+                android:gravity="center"
+                android:width="50dp" />
 
             <LinearLayout
                 android:id="@+id/ProgressBarLayout"
