@@ -298,7 +298,7 @@ public final class Amoeba extends Creature
                     setState(State.WARNING);
                     return;
                 }
-                if (satiety<HUNGRY && energies < satiety*REST_TO_HUNGRINESS_COEFF) {
+                if (satiety<HUNGRY && energies > satiety*REST_TO_HUNGRINESS_COEFF) {
                     setState(State.HUNGRINESS);
                     return;
                 }
