@@ -1,6 +1,7 @@
 package com.izyasosha.logics;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Alexander on 04.05.2017.
@@ -25,27 +26,36 @@ public class Model {
     {
         foodArrayList.remove(foodArrayList.indexOf(food));
     }
-    public static void remove(Enemy enemy)
-    {
-        enemyArrayList.remove(enemyArrayList.indexOf(enemy));
-    }
 
-    public static void killEnemies()
+    public static void killOutOfScreen()
     {
-        for(Enemy enemy:enemyArrayList)
-        {
+        Iterator<Enemy> iterEnemy = enemyArrayList.iterator();
+        while (iterEnemy.hasNext()) {
+            Enemy enemy = iterEnemy.next();
+
             if(enemy.getX()>=Model.getGameWidth()||enemy.getY()>=Model.getGameHeight()||
-                    enemy.getX()<=0||enemy.getY()<=0)
-            {
-                remove(enemy);
+                    enemy.getX()<=0||enemy.getY()<=0) {
+                iterEnemy.remove();
+            }
+        }
+
+        Iterator<Child> iterChild = childArrayList.iterator();
+        while (iterChild.hasNext()) {
+            Child child = iterChild.next();
+
+            if(child.getX()>=Model.getGameWidth()||child.getY()>=Model.getGameHeight()||
+                    child.getX()<=0||child.getY()<=0) {
+                iterChild.remove();
             }
         }
     }
 
     public static void checkIntersections()
     {
-        for(Food food:foodArrayList)
+        Iterator<Food> iterFood = foodArrayList.iterator();
+        while(iterFood.hasNext())
         {
+            Food food = iterFood.next();
             double d = Math.sqrt(Math.pow(food.x - amoeba.x, 2) + Math.pow(food.y - amoeba.y, 2));
             if(d<amoeba.size)
             {
@@ -63,6 +73,9 @@ public class Model {
         {
             enemy.moveRandomly();
         }
+        for(Child child:childArrayList){
+            child.moveRandomly();
+        }
         switch (amoeba.getState())
         {
             case NEUTRAL:
@@ -78,6 +91,7 @@ public class Model {
 
     public static ArrayList<Food> foodArrayList=new ArrayList<>();
     public static ArrayList<Enemy> enemyArrayList=new ArrayList<>();
+    public static ArrayList<Child> childArrayList=new ArrayList<>();
 
     private static CreationMode mode = CreationMode.NONE;
     public static CreationMode getMode() {

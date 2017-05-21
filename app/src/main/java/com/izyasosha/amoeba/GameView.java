@@ -19,11 +19,13 @@ import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.izyasosha.logics.Amoeba;
+import com.izyasosha.logics.Child;
 import com.izyasosha.logics.Enemy;
 import com.izyasosha.logics.Food;
 import com.izyasosha.logics.Model;
 import com.izyasosha.logics.State;
 
+import static com.izyasosha.logics.Model.childArrayList;
 import static com.izyasosha.logics.Model.enemyArrayList;
 import static com.izyasosha.logics.Model.foodArrayList;
 
@@ -61,6 +63,9 @@ public class GameView extends View {
         for(Enemy enemy:enemyArrayList)
         {
             enemy.draw(cv);
+        }
+        for(Child child : childArrayList){
+            child.draw(cv);
         }
     }
 

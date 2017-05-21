@@ -5,11 +5,15 @@ package com.izyasosha.logics;
  */
 import android.app.Application;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.widget.Toast;
 
 import com.izyasosha.amoeba.AmoebaActivity;
+import com.izyasosha.amoeba.R;
 
 import java.lang.Math;
+
+import static com.izyasosha.logics.Model.childArrayList;
 
 public final class Amoeba extends Creature
 {
@@ -55,7 +59,7 @@ public final class Amoeba extends Creature
             this.bmp = bmp;
             satiety=80;
             energies=80;
-            size=25;
+            size=35;
             neutralTime=0;
             divisionTime=0;
             setState(State.NEUTRAL);
@@ -65,7 +69,7 @@ public final class Amoeba extends Creature
 
     public void increaseSatiety()
     {
-        setSatiety(satiety+3);
+        setSatiety(satiety+5);
     }
     public void increaseEnergies()
     {
@@ -159,6 +163,10 @@ public final class Amoeba extends Creature
         return state;
     }
 
+    private void divide(){
+        childArrayList.add(new Child(x, y));
+    }
+
 
 
     public void setState(State state) {
@@ -192,9 +200,9 @@ public final class Amoeba extends Creature
     }
 
     private final int WARNING_DISTANCE = 100;
-    private final int SAFE_DISTANCE = 150;
+    private final int SAFE_DISTANCE = 200;
 
-    private final double SATIETY_DECR = 0.2;
+    private final double SATIETY_DECR = 0.35;
     private final double ENERGIES_DECR_COEFF = 0.01;
 
     private final int HUNGRY = 70;
@@ -299,14 +307,17 @@ public final class Amoeba extends Creature
                     return;
                 }
                 if (divisionTime == DIVISION_DURATION && nearestEnemy!=null && nearestEnemy.distanceTo < WARNING_DISTANCE) {
+                    divide();
                     setState(State.WARNING);
                     return;
                 }
                 if (divisionTime == DIVISION_DURATION && satiety < HUNGRY) {
+                    divide();
                     setState(State.HUNGRINESS);
                     return;
                 }
                 if (divisionTime == DIVISION_DURATION && energies < TIRED) {
+                    divide();
                     setState(State.REST);
                     return;
                 }

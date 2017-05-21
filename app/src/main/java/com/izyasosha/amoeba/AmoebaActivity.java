@@ -13,6 +13,7 @@ import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
 
 import com.izyasosha.logics.Amoeba;
+import com.izyasosha.logics.Child;
 import com.izyasosha.logics.Model;
 import com.izyasosha.logics.State;
 
@@ -43,6 +44,7 @@ public class AmoebaActivity extends Activity  {
         satietyBar=(ProgressBar) findViewById(R.id.progressSatiety);
         gameView=(GameView) findViewById(R.id.view);
         Model.setAmoeba(new Amoeba(amoebaBMP,100,100));
+        Child.setBmp(BitmapFactory.decodeResource(getResources(), R.drawable.child));
         runTimer();
     }
 
@@ -81,10 +83,10 @@ public class AmoebaActivity extends Activity  {
                     Model.getAmoeba().setNextState();
                     Model.moveObjects();
                     Model.checkIntersections();
-                    Model.killEnemies();
+                    Model.killOutOfScreen();
                 }
                 catch (Exception e){
-                    Toast.makeText(AmoebaActivity.this, e.getMessage()+e.getStackTrace(), Toast.LENGTH_LONG);
+                    Toast.makeText(AmoebaActivity.this, e.getMessage()+e.getStackTrace().toString(), Toast.LENGTH_LONG).show();
                 }
                 handler.postDelayed(this, 500);
             }

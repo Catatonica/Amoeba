@@ -11,12 +11,10 @@ public abstract class Creature extends GameObject
     protected static Random rnd = new Random();
     protected byte velocity=10;
 
-    protected void moveRandomly()
-    {
-        double direction = rnd.nextInt(360) / 360. *2*Math.PI;
-        //Генерирование случайного направления в градусах и перевод его в радианы
+    private double direction = (int)rnd.nextInt(360) / 360. *2*Math.PI;
 
-
+    public void moveRandomly(){
+        direction+=(rnd.nextInt(100) - 50) / 360. *2*Math.PI;
         setX(x + velocity*Math.cos(direction));
         setY(y + velocity*Math.sin(direction));
     }
