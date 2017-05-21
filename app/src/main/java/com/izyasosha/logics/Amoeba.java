@@ -18,9 +18,31 @@ public final class Amoeba extends Creature
     public double getSatiety() {
         return satiety;
     }
+    public void setSatiety(double newValue){
+        if(newValue<=0){
+            satiety = 0;
+            return;
+        }
+        if(newValue > 100){
+            satiety = 100;
+            return;
+        }
+        satiety = newValue;
+    }
 
     public double getEnergies() {
         return energies;
+    }
+    public void setEnergies(double newValue){
+        if(newValue<=0){
+            energies = 0;
+            return;
+        }
+        if(newValue > 100){
+            energies = 100;
+            return;
+        }
+        energies = newValue;
     }
 
     private double energies;
@@ -43,15 +65,15 @@ public final class Amoeba extends Creature
 
     public void increaseSatiety()
     {
-        satiety+=5;
+        setSatiety(satiety+3);
     }
     public void increaseEnergies()
     {
-        energies+=1;
+        setEnergies(energies+1);
     }
     public void decreaseEnergies()
     {
-        energies-=1;
+        setEnergies(energies-3);
     }
 
     //не даёт выйти координатам за край поля, вместо этого телепортирует на противоположный край
@@ -169,105 +191,128 @@ public final class Amoeba extends Creature
         }
     }
 
+    private final int WARNING_DISTANCE = 100;
+    private final int SAFE_DISTANCE = 150;
+
+    private final double SATIETY_DECR = 0.2;
+    private final double ENERGIES_DECR_COEFF = 0.01;
+
+    private final int HUNGRY = 70;
+    private final int SATE = 85;
+
+    private final int TIME_TO_START_DIVISION = 20;
+    private final int DIVISION_DURATION = 10;
+
+    private final int TIRED = 50;
+    private final int RESTED = 70;
+
+    private double HUNGRINESS_TO_REST_COEFF = 0.3;
+    private double REST_TO_HUNGRINESS_COEFF = 0.7;
+
+
     public void setNextState(){
-        satiety-=0.1;
-        energies-=0.01*velocity;
+        satiety-=SATIETY_DECR;
+        energies-=ENERGIES_DECR_COEFF*velocity;
         Enemy nearestEnemy=findNearestEnemy();
 
 
         switch (state) {
             case NEUTRAL:
-                if (nearestEnemy!=null && nearestEnemy.distanceTo < 100) {
+                if (nearestEnemy!=null && nearestEnemy.distanceTo < WARNING_DISTANCE) {
                     setState(State.WARNING);
                     return;
                 }
-                if (energies < 0.5*satiety) {
+                if (energies < TIRED) {
                     setState(State.REST);
                     return;
                 }
-                if (satiety < 70) {
+                if (satiety < HUNGRY) {
                 setState(State.HUNGRINESS);
                 return;
                  }
-                if (neutralTime == 20) {
+                if (neutralTime == TIME_TO_START_DIVISION) {
                     divisionTime = 0;
                     setState(State.DIVISION);
                     return;
                 }
+                if(satiety>=95){
+                    setState(State.REST);
+                    return;
+                }
                 setState(State.NEUTRAL);
-                break;
+                return;
             case WARNING:
                 if (nearestEnemy!=null && nearestEnemy.distanceTo < size) {
                     setState(State.DEATH);
                     return;
                 }
-                if (satiety < 70) {
+                if (satiety < HUNGRY) {
                     setState(State.HUNGRINESS);
                     return;
                 }
-                if (nearestEnemy==null || nearestEnemy.distanceTo >= 150) {
+                if (nearestEnemy==null || nearestEnemy.distanceTo >= SAFE_DISTANCE) {
                     neutralTime = 0;
                     setState(State.NEUTRAL);
                     return;
                 }
                 setState(State.WARNING);
-                break;
+                return;
             case HUNGRINESS:
                 if (satiety <= 0) {
                     setState(State.DEATH);
                     return;
                 }
-                if (nearestEnemy!=null && nearestEnemy.distanceTo < 100) {
+                if (nearestEnemy!=null && nearestEnemy.distanceTo < WARNING_DISTANCE) {
                     setState(State.WARNING);
                     return;
                 }
-                if (energies < 0.3 * satiety) {
+                if (energies < HUNGRINESS_TO_REST_COEFF * satiety) {
                     setState(State.REST);
                     return;
                 }
-                if (satiety >= 85) {
+                if (satiety >= SATE) {
                     neutralTime = 0;
                     setState(State.NEUTRAL);
                     return;
                 }
                 setState(State.HUNGRINESS);
-                break;
+                return;
             case REST:
-                if (nearestEnemy!=null && nearestEnemy.distanceTo < 100) {
+                if (nearestEnemy!=null && nearestEnemy.distanceTo < WARNING_DISTANCE) {
                     setState(State.WARNING);
                     return;
                 }
-                if (energies > 0.7 * satiety) {
+                if (satiety<HUNGRY && satiety < energies*REST_TO_HUNGRINESS_COEFF) {
                     setState(State.HUNGRINESS);
                     return;
                 }
-                if (energies >= 85) {
+                if (energies >= RESTED && satiety<=95) {
                     neutralTime = 0;
                     setState(State.NEUTRAL);
                     return;
                 }
                 setState(State.REST);
-                break;
+                return;
             case DIVISION:
                 if (nearestEnemy!=null && nearestEnemy.distanceTo < size) {
                     setState(State.DEATH);
                     return;
                 }
-                if (divisionTime == 10 && nearestEnemy!=null && nearestEnemy.distanceTo < 100) {
+                if (divisionTime == DIVISION_DURATION && nearestEnemy!=null && nearestEnemy.distanceTo < WARNING_DISTANCE) {
                     setState(State.WARNING);
                     return;
                 }
-                if (divisionTime == 10 && satiety < 70) {
+                if (divisionTime == DIVISION_DURATION && satiety < HUNGRY) {
                     setState(State.HUNGRINESS);
                     return;
                 }
-                if (divisionTime == 10 && energies < 70) {
+                if (divisionTime == DIVISION_DURATION && energies < TIRED) {
                     setState(State.REST);
                     return;
                 }
                 setState(State.DIVISION);
-                break;
-        }
+                return;
+            }
         }
     }
 

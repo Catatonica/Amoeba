@@ -8,11 +8,12 @@ import java.util.Random;
 
 public abstract class Creature extends GameObject
 {
+    protected static Random rnd = new Random();
     protected byte velocity=10;
 
     protected void moveRandomly()
     {
-        double direction = (int)(new Random()).nextInt(360) / (2*Math.PI);
+        double direction = rnd.nextInt(360) / 360. *2*Math.PI;
         //Генерирование случайного направления в градусах и перевод его в радианы
 
 

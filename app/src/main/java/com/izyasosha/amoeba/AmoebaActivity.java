@@ -1,6 +1,7 @@
 package com.izyasosha.amoeba;
 
 import android.app.Activity;
+import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -70,16 +71,21 @@ public class AmoebaActivity extends Activity  {
         boolean post = handler.post(new Runnable() {
             @Override
             public void run() {
-                gameView.invalidate();
-                if (Model.getAmoeba().getState() == State.DEATH) {
-                    showMessage();
-                    return;
+                try {
+                    gameView.invalidate();
+                    if (Model.getAmoeba().getState() == State.DEATH) {
+                        showMessage();
+                        return;
+                    }
+                    setProgress(Model.getAmoeba().getEnergies(), Model.getAmoeba().getSatiety());
+                    Model.getAmoeba().setNextState();
+                    Model.moveObjects();
+                    Model.checkIntersections();
+                    Model.killEnemies();
                 }
-                setProgress(Model.getAmoeba().getEnergies(),Model.getAmoeba().getSatiety());
-                Model.getAmoeba().setNextState();
-                Model.moveObjects();
-                Model.checkIntersections();
-                Model.killEnemies();
+                catch (Exception e){
+                    Toast.makeText(AmoebaActivity.this, e.getMessage()+e.getStackTrace(), Toast.LENGTH_LONG);
+                }
                 handler.postDelayed(this, 500);
             }
         });
