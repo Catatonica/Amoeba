@@ -200,7 +200,7 @@ public final class Amoeba extends Creature
     }
 
     private final int WARNING_DISTANCE = 100;
-    private final int SAFE_DISTANCE = 200;
+    private final int SAFE_DISTANCE = 150;
 
     private final double SATIETY_DECR = 0.35;
     private final double ENERGIES_DECR_COEFF = 0.01;
@@ -250,20 +250,28 @@ public final class Amoeba extends Creature
                 setState(State.NEUTRAL);
                 return;
             case WARNING:
+                if(energies <= 0){
+                    setState(State.REST);
+                    return;
+                }
                 if (nearestEnemy!=null && nearestEnemy.distanceTo < size) {
                     setState(State.DEATH);
+                    return;
+                }
+                if (nearestEnemy!=null && nearestEnemy.distanceTo < SAFE_DISTANCE) {
+                    setState(State.WARNING);
                     return;
                 }
                 if (satiety < HUNGRY) {
                     setState(State.HUNGRINESS);
                     return;
                 }
-                if (nearestEnemy==null || nearestEnemy.distanceTo >= SAFE_DISTANCE) {
-                    neutralTime = 0;
-                    setState(State.NEUTRAL);
+                if(energies < TIRED){
+                    setState(State.REST);
                     return;
                 }
-                setState(State.WARNING);
+                neutralTime = 0;
+                setState(State.NEUTRAL);
                 return;
             case HUNGRINESS:
                 if (satiety <= 0) {
@@ -290,7 +298,7 @@ public final class Amoeba extends Creature
                     setState(State.WARNING);
                     return;
                 }
-                if (satiety<HUNGRY && satiety < energies*REST_TO_HUNGRINESS_COEFF) {
+                if (satiety<HUNGRY && energies < satiety*REST_TO_HUNGRINESS_COEFF) {
                     setState(State.HUNGRINESS);
                     return;
                 }
@@ -316,7 +324,7 @@ public final class Amoeba extends Creature
                     setState(State.HUNGRINESS);
                     return;
                 }
-                if (divisionTime == DIVISION_DURATION && energies < TIRED) {
+                if (divisionTime == DIVISION_DURATION) {
                     divide();
                     setState(State.REST);
                     return;
