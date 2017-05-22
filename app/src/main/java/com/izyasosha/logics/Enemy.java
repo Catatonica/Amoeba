@@ -9,10 +9,11 @@ import android.graphics.Canvas;
 
 public final class Enemy extends Creature
 {
+    public double distanceTo=0;
 
     public Enemy(double x, double y, Bitmap bmp)
     {
-        this.bmp = bmp;                    //возвращаем рисунок
+        this.bmp = bmp;
         this.x = x;
         this.y = y;
     }

@@ -7,91 +7,86 @@ package com.izyasosha.amoeba;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-//import android.graphics.Paint;
+import android.graphics.Picture;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PictureDrawable;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.MotionEvent;
+import android.widget.Toast;
+
 import com.izyasosha.logics.Amoeba;
+import com.izyasosha.logics.Child;
 import com.izyasosha.logics.Enemy;
 import com.izyasosha.logics.Food;
-import com.izyasosha.logics.GameObject;
 import com.izyasosha.logics.Model;
-import java.util.ArrayList;
+import com.izyasosha.logics.State;
 
-import static com.izyasosha.logics.Model.gameObjects;
-
-//import com.izyasosha.logics.Amoeba;
-
+import static com.izyasosha.logics.Model.childArrayList;
+import static com.izyasosha.logics.Model.enemyArrayList;
+import static com.izyasosha.logics.Model.foodArrayList;
 
 public class GameView extends View {
-    Bitmap amoebaBMP= BitmapFactory.decodeResource(getResources(), R.drawable.amoeba);
+
     Bitmap enemyBMP= BitmapFactory.decodeResource(getResources(), R.drawable.enemy);
     Bitmap foodBMP= BitmapFactory.decodeResource(getResources(), R.drawable.food1);
 
-    public float X=0;
-    public float Y=0;
-    Canvas mCanvas;
-  //  ArrayList<GameObject> objectArrayList=new ArrayList<>();
+
+    static Canvas mCanvas;
 
     public GameView(Context cxt, AttributeSet attrs) {
         super(cxt, attrs);
+        mCanvas = new Canvas();
         setMinimumHeight(100);
         setMinimumWidth(100);
+        setWillNotDraw(false);
     }
 
+    boolean initialized = false;
+    @Override
     protected void onDraw(Canvas cv) {
-        Model.setGameHeight(cv.getHeight());
-        Model.setGameWidth(cv.getWidth());
-
-        mCanvas=cv;
-        super.onDraw(mCanvas);
-        mCanvas.drawColor(Color.argb(100,175,244,228));
-
-        Model.setAmoeba(new Amoeba(Model.getGameWidth()/2,Model.getGameHeight()/2, amoebaBMP));
-        gameObjects.add(Model.getAmoeba());
-        for(GameObject obj: gameObjects)
+        if(!initialized) {
+            initialized = true;
+            Model.setGameHeight(cv.getHeight());
+            Model.setGameWidth(cv.getWidth());
+        }
+        super.onDraw(cv);
+        cv.drawColor(Color.argb(255, 228, 219, 138));
+        Model.getAmoeba().draw(cv);
+        for(Food food:foodArrayList)
         {
-            obj.draw(mCanvas);
-             /* try
-+                {
-+                    TimeUnit.SECONDS.sleep(1);
-+                }
-+            catch (InterruptedException ex)
-+            {
-+
-+            } */
+            food.draw(cv);
+        }
+        for(Enemy enemy:enemyArrayList)
+        {
+            enemy.draw(cv);
+        }
+        for(Child child : childArrayList){
+            child.draw(cv);
         }
     }
 
+
     public boolean onTouchEvent( MotionEvent event) {
         // координаты нажатия
-        X=event.getX();
-        Y=event.getY();
+        double X=event.getX();
+        double Y=event.getY();
         // переключатель в зависимости от типа события
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
+        if (event.getAction() == MotionEvent.ACTION_DOWN)
                 switch (Model.getMode())
                 {
                     case FOOD:
-                        gameObjects.add(new Food(X,Y,foodBMP));
+                        foodArrayList.add(new Food(X,Y,foodBMP));
                         break;
                     case ENEMY:
-                        gameObjects.add(new Enemy(X,Y,enemyBMP));
+                        enemyArrayList.add(new Enemy(X,Y,enemyBMP));
                         break;
                     case NONE:
                         break;
                 }
-                for(GameObject obj: gameObjects) {
-                    obj.draw(mCanvas);
-                }
-                invalidate();
-                break;
-            case MotionEvent.ACTION_MOVE: // движени
-            case MotionEvent.ACTION_UP: // отпускание
-            case MotionEvent.ACTION_CANCEL:// ничего не делаем
-        }
         return true;
     }
 }
